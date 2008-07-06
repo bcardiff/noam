@@ -26,6 +26,10 @@ public class AFND implements AF {
 		if (!graph.containsKey(name))
 			graph.put(name, new HashMap<String, Set<String>>());
 	}
+	
+	public void addFinalState(String name){
+		finalSts.add(name);
+	}
 
 	public void addTransition(String src, String trans, String dst) {
 		if (!graph.containsKey(src))
