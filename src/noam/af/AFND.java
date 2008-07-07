@@ -26,8 +26,8 @@ public class AFND implements AF {
 		if (!graph.containsKey(name))
 			graph.put(name, new HashMap<String, Set<String>>());
 	}
-	
-	public void addFinalState(String name){
+
+	public void addFinalState(String name) {
 		finalSts.add(name);
 	}
 
@@ -68,10 +68,12 @@ public class AFND implements AF {
 
 	public Iterator<Transition> getTransitions(String from, String label) {
 		LinkedList<Transition> r = new LinkedList<Transition>();
-		for (String dest : graph.get(from).get(label)) {
-			r.add(new Transition(from, label, dest));
+		HashMap<String, Set<String>> transitions = graph.get(from);
+		if (transitions.containsKey(label)) {
+			for (String dest : transitions.get(label)) {
+				r.add(new Transition(from, label, dest));
+			}
 		}
-
 		return r.iterator();
 	}
 }

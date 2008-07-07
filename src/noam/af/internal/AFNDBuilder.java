@@ -29,7 +29,7 @@ public class AFNDBuilder implements IAutomataBuilder {
 
 	@Override
 	public void addTransition(Transition t) {
-		output.addTransition(t.getFrom(), t.getTo(), t.getTo());
+		output.addTransition(t.getFrom(), t.getLabel(), t.getTo());
 	}
 
 	@Override
