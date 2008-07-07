@@ -1,5 +1,6 @@
 package noam.af.algorithms;
 
+
 import static noam.utils.IteratorHelper.intersect;
 
 import java.util.HashSet;
