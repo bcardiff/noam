@@ -1,5 +1,6 @@
 package noam.utils;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,11 +17,22 @@ public class IteratorHelper {
 		return false;
 	}
 
-	public static <E> Iterator<E> intersect(Iterator<E> a, Set<E> b) {
+	public static <E> Iterator<E> intersect(Iterator<E> a, Collection<E> b) {
 		LinkedList<E> r = new LinkedList<E>();
 		while (a.hasNext()) {
 			E c = a.next();
 			if (b.contains(c)) {
+				r.add(c);
+			}
+		}
+		return r.iterator();
+	}
+
+	public static <E> Iterator<E> difference(Iterator<E> a, Collection<E> b) {
+		LinkedList<E> r = new LinkedList<E>();
+		while (a.hasNext()) {
+			E c = a.next();
+			if (!b.contains(c)) {
 				r.add(c);
 			}
 		}
@@ -45,7 +57,7 @@ public class IteratorHelper {
 		}
 	}
 
-	public static <E> void addAll(Set<E> set, Iterator<E> elems) {
+	public static <E> void addAll(Collection<E> set, Iterator<E> elems) {
 		while (elems.hasNext()) {
 			set.add(elems.next());
 		}

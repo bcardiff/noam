@@ -8,5 +8,5 @@ public interface AF {
 	Iterator<String> getFinalStates();
 	Iterator<Transition> getTransitions(String from);
 	Iterator<Transition> getTransitions(String from, String label);
-	
+	Iterator<String> getAlphabet();
 }

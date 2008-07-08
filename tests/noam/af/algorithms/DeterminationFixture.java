@@ -62,4 +62,15 @@ public class DeterminationFixture {
 		System.out.append(IO.printDot(a));
 		System.out.append(IO.printDot(b));
 	}
+	
+	@Test
+	public void Hopcroft2_18(){
+		AF a = IO.parseAF("<(A,B,C,D,E,F),(p,m,d,0,1,2),((A,LAMBDA,B)(A,p,B)(A,m,B)" + dig("B","B")+dig("B","E")+"(B,d,C)"+dig("C","D")+dig("D","D") + "(E,d,D)(D,LAMBDA,F)),A,(F)>");
+		System.out.append(IO.printDot(a));
+		System.out.append(IO.printDot(new Determination(a)));
+	}
+
+	private String dig(String from, String to) {
+		return "(" + from + ",0," + to + ")(" + from + ",1," + to + ")(" + from + ",2," + to + ")";
+	}
 }
