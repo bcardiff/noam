@@ -14,23 +14,23 @@ public class AfgrammarFixture {
 	@Before
 	public void setUp(){
 		nullBuilder = new IAutomataBuilder(){
-			@Override
+			
 			public void addFinalState(String id) {
 			}
 
-			@Override
+			
 			public void addState(String id) {
 			}
 
-			@Override
+			
 			public void addTerminal(String t) {
 			}
 
-			@Override
+			
 			public void addTransition(Transition t) {
 			}
 
-			@Override
+			
 			public void setInitialState(String id) {
 			}
 		};

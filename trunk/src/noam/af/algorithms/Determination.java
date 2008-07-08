@@ -182,22 +182,22 @@ public class Determination implements AF {
 		return String.valueOf((char) (subsetsOfStates.size() + (int) 'A'));
 	}
 
-	@Override
+	
 	public Iterator<String> getFinalStates() {
 		return finalStates.iterator();
 	}
 
-	@Override
+	
 	public String getInitialState() {
 		return initialState;
 	}
 
-	@Override
+	
 	public Iterator<String> getStates() {
 		return subsetsOfStates.keySet().iterator();
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from) {
 		// TODO lazy initialization
 		LinkedList<Transition> res = new LinkedList<Transition>();
@@ -220,7 +220,7 @@ public class Determination implements AF {
 		return res.iterator();
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from, String label) {
 		LinkedList<Transition> res = new LinkedList<Transition>();
 		if (label.equals(Terminal.LAMBDA)) {
