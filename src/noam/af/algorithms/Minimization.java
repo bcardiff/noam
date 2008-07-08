@@ -35,37 +35,37 @@ public class Minimization implements AF {
 		// TODO
 	}
 
-	@Override
+		
 	public Iterator<String> getFinalStates() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public String getInitialState() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public Iterator<String> getStates() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from, String label) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public Iterator<String> getAlphabet() {
 		// TODO Auto-generated method stub
 		return null;

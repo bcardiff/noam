@@ -14,12 +14,12 @@ public class JoinIterator<E> implements Iterator<E>
 		this.second = second;
 	}
 
-	@Override
+	
 	public boolean hasNext() {
 		return first.hasNext() || second.hasNext();
 	}
 
-	@Override
+	
 	public E next() {
 		if (first.hasNext())
 			return first.next();
@@ -27,7 +27,7 @@ public class JoinIterator<E> implements Iterator<E>
 			return second.next();
 	}
 
-	@Override
+	
 	public void remove() {
 		throw new NotImplementedException();		
 	}
