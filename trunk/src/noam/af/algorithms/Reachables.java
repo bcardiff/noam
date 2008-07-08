@@ -72,7 +72,7 @@ public class Reachables implements AF {
 		return inner.getTransitions(from, label);
 	}
 
-	@Override
+	
 	public Iterator<String> getAlphabet() {
 		return inner.getAlphabet();
 	}

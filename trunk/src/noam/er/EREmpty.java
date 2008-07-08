@@ -3,8 +3,8 @@ package noam.er;
 public class EREmpty extends ER{
 
 	@Override
-	void accept(IVisitor v) {
-		v.visit(this);
+	Object accept(IVisitor v) {
+		return v.visit(this);
 	}
 
 }

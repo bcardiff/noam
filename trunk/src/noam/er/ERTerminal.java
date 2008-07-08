@@ -9,16 +9,12 @@ public class ERTerminal extends ER{
 	}
 
 	@Override
-	void accept(IVisitor v) {
-		v.visit(this);
+	Object accept(IVisitor v) {
+		return v.visit(this);
 	}
 
 	public String getTerminal() {
 		return terminal;
-	}
-
-	public void setTerminal(String terminal) {
-		this.terminal = terminal;
 	}
 	
 	

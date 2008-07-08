@@ -29,34 +29,34 @@ public class Complete implements AF {
 		deadState = buffer.toString();
 	}
 
-	@Override
+	
 	public Iterator<String> getAlphabet() {
 		return inner.getAlphabet();
 	}
 
-	@Override
+	
 	public Iterator<String> getFinalStates() {
 		return inner.getFinalStates();
 	}
 
-	@Override
+	
 	public String getInitialState() {
 		return inner.getInitialState();
 	}
 
-	@Override
+	
 	public Iterator<String> getStates() {
 		return new JoinIterator<String>(inner.getStates(),
 				new SingletonIterator<String>(deadState));
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from, String label) {
 		Iterator<Transition> it = inner.getTransitions(from, label);
 		if (it.hasNext())

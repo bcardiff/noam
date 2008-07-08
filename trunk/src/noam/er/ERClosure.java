@@ -12,13 +12,9 @@ public class ERClosure extends ER {
 		return erInner;
 	}
 
-	public void setErInner(ER erInner) {
-		this.erInner = erInner;
-	}
-
 	@Override
-	void accept(IVisitor v) {
-		v.visit(this);
+	Object accept(IVisitor v) {
+		return v.visit(this);
 	}
 	
 }

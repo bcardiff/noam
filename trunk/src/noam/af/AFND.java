@@ -13,9 +13,7 @@ public class AFND implements AF {
 	// cada nodo tiene asociada una lista de adyacencia en la cual la transicion
 	// es la key
 	private HashMap<String, HashMap<String, Set<String>>> graph;
-
 	private String initialSt;
-
 	private Set<String> finalSts;
 	private List<String> alphabet;
 
@@ -84,7 +82,7 @@ public class AFND implements AF {
 		alphabet.add(t);
 	}
 
-	@Override
+	
 	public Iterator<String> getAlphabet() {
 		return alphabet.iterator();
 	}
