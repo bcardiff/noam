@@ -24,7 +24,7 @@ public class AFNDBuilder implements IAutomataBuilder {
 
 	
 	public void addTerminal(String t) {
-		// TODO ?
+		output.addTerminal(t);
 	}
 
 	

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -16,10 +17,12 @@ public class AFND implements AF {
 	private String initialSt;
 
 	private Set<String> finalSts;
+	private List<String> alphabet;
 
 	public AFND() {
 		graph = new HashMap<String, HashMap<String, Set<String>>>();
 		finalSts = new HashSet<String>();
+		alphabet = new LinkedList<String>();
 	}
 
 	public void addNode(String name) {
@@ -76,8 +79,13 @@ public class AFND implements AF {
 		}
 		return r.iterator();
 	}
-	
-	
-	
-	
+
+	public void addTerminal(String t) {
+		alphabet.add(t);
+	}
+
+	@Override
+	public Iterator<String> getAlphabet() {
+		return alphabet.iterator();
+	}
 }

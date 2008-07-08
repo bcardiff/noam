@@ -1,6 +1,9 @@
 package noam.af.algorithms;
 
 import java.util.Iterator;
+
+import com.sun.org.apache.bcel.internal.classfile.InnerClass;
+
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.Function;
@@ -57,6 +60,10 @@ public class AFRenamed implements AF {
 
 		Iterator<Transition> it = automaton.getTransitions(from, label);
 		return new IteratorMapping<Transition, Transition>(it, appendTrans);
+	}
+
+	public Iterator<String> getAlphabet() {
+		return automaton.getAlphabet();
 	}
 
 }

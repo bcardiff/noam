@@ -250,4 +250,9 @@ public class Determination implements AF {
 		}
 	}
 
+	@Override
+	public Iterator<String> getAlphabet() {
+		return inner.getAlphabet();
+	}
+
 }
