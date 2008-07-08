@@ -12,27 +12,27 @@ public class AFNDBuilder implements IAutomataBuilder {
 		output = new AFND();
 	}
 
-	@Override
+	
 	public void addFinalState(String id) {
 		output.addFinalState(id);
 	}
 
-	@Override
+	
 	public void addState(String id) {
 		output.addNode(id);
 	}
 
-	@Override
+	
 	public void addTerminal(String t) {
 		// TODO ?
 	}
 
-	@Override
+	
 	public void addTransition(Transition t) {
 		output.addTransition(t.getFrom(), t.getLabel(), t.getTo());
 	}
 
-	@Override
+	
 	public void setInitialState(String id) {
 		output.setInitialState(id);
 	}

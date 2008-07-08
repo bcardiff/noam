@@ -41,22 +41,22 @@ public class Reachables implements AF {
 		}
 	}
 
-	@Override
+	
 	public Iterator<String> getFinalStates() {
 		return intersect(inner.getFinalStates(), reachables);
 	}
 
-	@Override
+	
 	public String getInitialState() {
 		return inner.getInitialState();
 	}
 
-	@Override
+	
 	public Iterator<String> getStates() {
 		return reachables.iterator();
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from) {
 		if (!reachables.contains(from))
 			throw new InvalidStateException(from);
@@ -64,7 +64,7 @@ public class Reachables implements AF {
 		return inner.getTransitions(from);
 	}
 
-	@Override
+	
 	public Iterator<Transition> getTransitions(String from, String label) {
 		if (!reachables.contains(from))
 			throw new InvalidStateException(from);
