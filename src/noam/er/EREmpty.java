@@ -1,5 +1,6 @@
 package noam.er;
 
+
 public class EREmpty extends ER{
 
 	@Override
@@ -7,4 +8,8 @@ public class EREmpty extends ER{
 		return v.visit(this);
 	}
 
+	@Override
+	public boolean equals(Object arg0) {
+		return arg0 instanceof EREmpty;
+	}
 }

@@ -12,6 +12,9 @@ import noam.af.Transition;
 import noam.af.grammar.AfLexer;
 import noam.af.grammar.AfParser;
 import noam.af.internal.AFNDBuilder;
+import noam.er.ER;
+import noam.er.grammar.ERLexer;
+import noam.er.grammar.ERParser;
 
 public class IO {
 	public static AF parseAF(String text) {
@@ -28,7 +31,19 @@ public class IO {
 		}
 		return builder.getAutomata();
 	}
-	
+
+	public static ER parseER(String text) {
+		StringReader reader = new StringReader(text);
+		ERLexer lexer = new ERLexer(reader);
+		ERParser parser = new ERParser(lexer);
+		try {
+			return parser.regexp();
+		} catch (RecognitionException e) {
+			throw new RuntimeException(e);
+		} catch (TokenStreamException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	public static String printDot(AF automaton){
 		StringBuilder sb = new StringBuilder();
 		sb.append("digraph G {");

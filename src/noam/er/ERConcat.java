@@ -1,5 +1,7 @@
 package noam.er;
 
+import static noam.utils.ObjectHelper.safetyEquals;
+
 public class ERConcat extends ER {
 
 	private ER erLeft = null;
@@ -23,6 +25,14 @@ public class ERConcat extends ER {
 		return v.visit(this);
 	}
 	
-	
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 instanceof ERConcat){
+			ERConcat that = (ERConcat) arg0;
+			return safetyEquals(this.erLeft, that.erLeft) &&
+					safetyEquals(this.erRight, that.erRight);
+		} else {
+			return false;
+		}
+	}
 }

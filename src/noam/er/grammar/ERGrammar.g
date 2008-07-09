@@ -19,7 +19,7 @@ options
 
 regexp returns [ER res]
 	{ ER re = null; }
-	: res= reL3 (OR re= regexp {res = new ERChoice(res, re); })? 
+	: res= reL3 ( (OR re= regexp {res = new ERChoice(res, re); })? | EOF ) 
 	;
 	
 reL3 returns [ER res]
@@ -28,7 +28,7 @@ reL3 returns [ER res]
 	;
 	
 reL2 returns [ER res]
-	: res= reL1 (ASTERISK  {res = new ERClosure(res); } )?
+	: res= reL1 (ASTERISK  {res = new ERClosure(res); } )*
 	;
 	
 reL1 returns [ER res]
@@ -36,6 +36,7 @@ reL1 returns [ER res]
 	: t= terminal {res = new ERTerminal(t); }
 	| LPAREN res= regexp RPAREN 
 	| EMPTY  {res = new EREmpty(); }
+	| LAMBDA {res = new ERLambda(); }
 	;
 
 	

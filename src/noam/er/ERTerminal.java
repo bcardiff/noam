@@ -1,5 +1,7 @@
 package noam.er;
 
+import static noam.utils.ObjectHelper.safetyEquals;
+
 public class ERTerminal extends ER{
 
 	private String terminal = "";
@@ -17,5 +19,13 @@ public class ERTerminal extends ER{
 		return terminal;
 	}
 	
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 instanceof ERTerminal){
+			ERTerminal that = (ERTerminal) arg0;
+			return safetyEquals(this.terminal, that.terminal);
+		} else {
+			return false;
+		}
+	}
 }
