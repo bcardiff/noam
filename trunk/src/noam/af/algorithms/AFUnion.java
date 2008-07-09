@@ -1,77 +1,94 @@
 package noam.af.algorithms;
 
+import static noam.utils.IteratorHelper.*;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import noam.af.AF;
-import noam.af.AFND;
 import noam.af.Transition;
-import noam.af.internal.AFNDBuilder;
-import noam.utils.Function;
-import noam.utils.IteratorMapping;
+import noam.utils.IteratorHelper;
 import noam.utils.JoinIterator;
 
 public class AFUnion implements AF {
 
-	//Es un asco... lo commiteo para seguir despues.
-	private AFND automaton;
-	
-	
-	public AFUnion(AF a1, AF a2) {
-		AF a1renamed = new AFRenamed(a1, "First");
-		AF a2renamed = new AFRenamed(a2, "Second");
-		
-		automaton = joinAF(a1renamed, a2renamed);
-	}
+	// Ya no es un asco, porque lo arreglo Brian.
+	private AF a;
+	private AF b;
+	private Set<String> finalStates;
+	private String initialState;
+	private HashSet<String> aStates;
+	private HashSet<String> bStates;
 
-	private AFND joinAF(AF a1, AF a2) {
-		AFNDBuilder afndBuilder = new AFNDBuilder();
-		Iterator<String> iter= new JoinIterator<String>(a1.getStates(), a2.getStates());
-		
-		while (iter.hasNext()) {
-			afndBuilder.addState(iter.next());
-		}
-		
-		return null;
+	public AFUnion(AF a1, AF a2) {
+		a = a1;
+		b = a2;
+		aStates = new HashSet<String>();
+		addAll(aStates, a.getStates());
+		bStates = new HashSet<String>();
+		addAll(bStates, b.getStates());
+
+		finalStates = new HashSet<String>();
 	}
 
 	public void setInitialState(String state) {
-		automaton.setInitialState(state);
-	}
-	
-	public void addState(String state) {
-		automaton.addNode(state);
+		this.initialState = state;
 	}
 
 	public Iterator<String> getFinalStates() {
+		return finalStates.iterator();
+	}
 
-		return automaton.getFinalStates();
+	public void addFinalState(String state) {
+		finalStates.add(state);
 	}
 
 	public String getInitialState() {
-		
-		return automaton.getInitialState();
+		return initialState;
 	}
 
 	public Iterator<String> getStates() {
 
-		return automaton.getStates();
+		Set<String> states = new HashSet<String>();
+		IteratorHelper.addAll(states, a.getStates());
+		IteratorHelper.addAll(states, b.getStates());
+
+		return states.iterator();
 	}
 
 	public Iterator<Transition> getTransitions(String from) {
-
-		return automaton.getTransitions(from);
-
+		if (aStates.contains(from) && bStates.contains(from)) {
+			return new JoinIterator<Transition>(a.getTransitions(from),
+					b.getTransitions(from));
+		} else if (aStates.contains(from)) {
+			return a.getTransitions(from);
+		} else if (bStates.contains(from)) {
+			return b.getTransitions(from);
+		} else {
+			throw new RuntimeException();
+		}
 	}
 
 	public Iterator<Transition> getTransitions(String from, String label) {
-
-		return automaton.getTransitions(from, label);
+		if (aStates.contains(from) && bStates.contains(from)) {
+			return new JoinIterator<Transition>(a.getTransitions(from, label),
+					b.getTransitions(from, label));
+		} else if (aStates.contains(from)) {
+			return a.getTransitions(from, label);
+		} else if (bStates.contains(from)) {
+			return b.getTransitions(from, label);
+		} else {
+			throw new RuntimeException();
+		}
 	}
 
 	public Iterator<String> getAlphabet() {
 
-		return automaton.getAlphabet();
+		Set<String> alphabet = new HashSet<String>();
+		IteratorHelper.addAll(alphabet, a.getAlphabet());
+		IteratorHelper.addAll(alphabet, b.getAlphabet());
+
+		return alphabet.iterator();
 	}
 
 }
