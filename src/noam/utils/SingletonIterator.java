@@ -14,18 +14,18 @@ public class SingletonIterator<E> implements Iterator<E> {
 		hasNext = true;
 	}
 
-	@Override
+	
 	public boolean hasNext() {
 		return hasNext;
 	}
 
-	@Override
+	
 	public E next() {
 		hasNext = false;
 		return element;
 	}
 
-	@Override
+	
 	public void remove() {
 		throw new NotImplementedException();
 	}
