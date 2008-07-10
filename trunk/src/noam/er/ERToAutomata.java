@@ -47,8 +47,30 @@ public class ERToAutomata implements IVisitor {
 	}
 
 	public AF visit(ERClosure e) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		AF inner =(AF) e.getErInner().accept(this);
+		String initial = inner.getInitialState();
+		
+		// En este automata meto las transiciones agregadas:
+		// Desde los estados finales hasta el inicial por LAMBDA.
+		AFNDBuilder ab = new AFNDBuilder();
+		ab.addState(initial);		
+		
+		Iterator<String> it = inner.getFinalStates();
+		
+		while (it.hasNext()) {
+			String curState = it.next();
+			ab.addState(curState);
+			ab.addTransition(new Transition(curState, Terminal.LAMBDA, initial));
+		}
+				
+		AFUnion res = new AFUnion(inner, ab.getAutomata());
+		
+		// El estado inicial es el mismo, y además es final.
+		res.setInitialState(inner.getInitialState());
+		res.addFinalState(inner.getInitialState());
+		
+		return res;
 	}
 
 	public AF visit(ERConcat e) {
