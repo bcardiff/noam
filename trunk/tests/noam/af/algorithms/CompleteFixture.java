@@ -1,5 +1,6 @@
 package noam.af.algorithms;
 
+import static junit.framework.Assert.*;
 import static noam.utils.IteratorHelper.*;
 import noam.IO;
 import noam.af.AF;
@@ -19,5 +20,12 @@ public class CompleteFixture {
 		assertSameElements(a.getTransitions("B"), new Transition("B","y","C"),new Transition("B","x",a.getDeadState()));
 		assertSameElements(a.getTransitions("C"), new Transition("C","x",a.getDeadState()),new Transition("C","y",a.getDeadState()));
 		System.out.append(IO.printDot(a));
+	}
+	
+	@Test
+	public void sameAutomataIfComplete() {
+		AF a = IO.parseAF("<(A,B),(1,0),((A,1,B)(A,0,A)(B,1,A)(B,0,B)),A,(B)>");
+		AF b = Complete.ensureComplete(a);
+		assertSame(a, b);
 	}
 }
