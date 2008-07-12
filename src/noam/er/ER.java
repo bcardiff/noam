@@ -6,6 +6,6 @@ public abstract class ER {
 		
 	}
 
-	abstract Object accept(IVisitor v);
+	public abstract Object accept(IVisitor v);
 	
 }

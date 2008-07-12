@@ -39,20 +39,21 @@ public class IteratorHelper {
 		return r.iterator();
 	}
 
-	public static <E> void assertSameElements(Iterator<E> source,
-			E ... expected) {
+	public static <E> void assertSameElements(Iterator<E> source, E... expected) {
 		HashSet<E> exp = new HashSet<E>();
 		for (E e : expected) {
 			exp.add(e);
 		}
 
-		while (source.hasNext()){
+		while (source.hasNext()) {
 			E e = source.next();
-			Assert.assertTrue(e.toString() + " is unexpected.", exp.contains(e));
+			Assert
+					.assertTrue(e.toString() + " is unexpected.", exp
+							.contains(e));
 			exp.remove(e);
 		}
-		
-		if (!exp.isEmpty()){
+
+		if (!exp.isEmpty()) {
 			Assert.fail(exp.iterator().next().toString() + " is missing.");
 		}
 	}
@@ -61,5 +62,14 @@ public class IteratorHelper {
 		while (elems.hasNext()) {
 			set.add(elems.next());
 		}
+	}
+
+	public static <T> int countOf(Iterator<T> it) {
+		int res = 0;
+		while (it.hasNext()) {
+			it.next();
+			res++;
+		}
+		return res;
 	}
 }

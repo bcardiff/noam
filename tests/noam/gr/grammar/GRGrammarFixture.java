@@ -39,7 +39,6 @@ public class GRGrammarFixture {
 		parse("<(S),(),(   ),\n   S >", nullBuilder);
 		parse("<(S,F),(a),( (S,a) ),S>", nullBuilder);
 		parse("<(S,F),(a),( (S,a,F) ),S>", nullBuilder);
-		//No anda con mas de una produccion.
 		parse("<(S,F),(a),( (S,a)(F,a) ),S>", nullBuilder);
 		parse("<(S,F),(a),( (S,a)(S,a,F) (F, a) (S,LAMBDA) ),S>", nullBuilder);
 		parse("<(S,L),(a),( (S,a,L) (L,LAMBDA) ),S>", nullBuilder);

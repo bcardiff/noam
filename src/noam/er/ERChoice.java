@@ -16,6 +16,7 @@ public class ERChoice extends ER {
 	}
 
 	@Override
+	public
 	Object accept(IVisitor v) {
 		return v.visit(this);
 	}
