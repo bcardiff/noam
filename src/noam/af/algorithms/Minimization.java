@@ -67,11 +67,15 @@ public class Minimization implements AF {
 		LinkedList<HashSet<String>> nextPartition = new LinkedList<HashSet<String>>();
 
 		for (HashSet<String> eqClass : statesPartition) {
-			while (eqClass.size() > 0) {
+			// since we will take elements from 'eqClass' we need to 
+			// to do it in a copy, because we need to check in which 
+			// eqClass a state was.
+			HashSet<String> eqClassCopy = new HashSet<String>(eqClass);
+			while (eqClassCopy.size() > 0) {
 				HashSet<String> newEqClass = new HashSet<String>();
-				final String e = takeOne(eqClass);
+				final String e = takeOne(eqClassCopy);
 				newEqClass.add(e);
-				moveAllThat(newEqClass, eqClass, new Function<String,Boolean>(){
+				moveAllThat(newEqClass, eqClassCopy, new Function<String,Boolean>(){
 					public Boolean apply(String s) {
 						Iterator<String> symbolIt = inner.getAlphabet();
 						while (symbolIt.hasNext()){
