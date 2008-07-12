@@ -1,11 +1,13 @@
 package noam.af.algorithms;
 
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.Function;
 import noam.utils.IteratorMapping;
+import noam.utils.StringHelper;
 
 public class AFRenamed implements AF {
 
@@ -28,6 +30,29 @@ public class AFRenamed implements AF {
 		};
 	}
 
+	public static AF CanonicalNamed(AF af) {
+		final TreeMap<String, String> fromInner = new TreeMap<String, String>();
+		final TreeMap<String, String> toInner = new TreeMap<String, String>();
+
+		Iterator<String> itStates = af.getStates();
+		while (itStates.hasNext()) {
+			String innerState = itStates.next();
+			String outerState = StringHelper.asString(fromInner.size());
+			fromInner.put(innerState, outerState);
+			toInner.put(outerState, innerState);
+		}
+
+		return new AFRenamed(af, new Function<String, String>() {
+			public String apply(String s) {
+				return fromInner.get(s);
+			}
+		}, new Function<String, String>() {
+			public String apply(String s) {
+				return toInner.get(s);
+			}
+		});
+	}
+
 	public Iterator<String> getFinalStates() {
 		Iterator<String> it = automaton.getFinalStates();
 		return new IteratorMapping<String, String>(it, fromInner);
@@ -48,7 +73,8 @@ public class AFRenamed implements AF {
 	}
 
 	public Iterator<Transition> getTransitions(String from, String label) {
-		Iterator<Transition> it = automaton.getTransitions(toInner.apply(from), label);
+		Iterator<Transition> it = automaton.getTransitions(toInner.apply(from),
+				label);
 		return new IteratorMapping<Transition, Transition>(it, fromInnerTrans);
 	}
 
