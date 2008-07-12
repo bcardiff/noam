@@ -199,7 +199,6 @@ public class Determination implements AF {
 
 	
 	public Iterator<Transition> getTransitions(String from) {
-		// TODO lazy initialization
 		LinkedList<Transition> res = new LinkedList<Transition>();
 
 		if (!subsetsOfStates.containsKey(from))

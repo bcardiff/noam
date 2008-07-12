@@ -1,10 +1,12 @@
 package noam;
 
 import java.io.StringReader;
+import java.util.Iterator;
 
 import noam.af.AF;
 import noam.er.ER;
 import noam.gr.Grammar;
+import noam.gr.Production;
 import noam.gr.algorithms.GrToAutomata;
 import noam.gr.grammar.GrLexer;
 import noam.gr.grammar.GrParser;
@@ -20,10 +22,25 @@ public class GrConverter extends FormalismConverter<Grammar> {
 
 	@Override
 	public boolean isFormalismOk() {
-		// TODO check constrains: lambda solo en una, after calling super	
-		return super.isFormalismOk();
+		return super.isFormalismOk()
+				&& lambdaTransitionOnlyOnInitial(formalism);
 	}
-	
+
+	private static boolean lambdaTransitionOnlyOnInitial(Grammar gr) {
+		Iterator<Production> productions = gr.getProductions();
+		while (productions.hasNext()) {
+			Production prod = (Production) productions.next();
+			if (prod.getRight().size() == 0) {
+				// Lambda production
+				if (!prod.getLeft().get(0).equals(gr.getDistSymbol())) {
+					return false; // lambda production not from distinguished
+									// symbol.
+				}
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public Grammar parseInput() throws RecognitionException,
 			TokenStreamException {
@@ -42,7 +59,7 @@ public class GrConverter extends FormalismConverter<Grammar> {
 
 	@Override
 	public ER toER() {
-		// TODO AFD->ER, USE this.toAFD()		
+		// TODO AFD->ER, USE this.toAFD()
 		return null;
 	}
 
