@@ -42,7 +42,7 @@ public class AfConverter extends FormalismConverter<AF> {
 
 	@Override
 	public Grammar toGR() {
-		// TODO AFD->ER, USE this.toAFD();
+		// TODO AFD->GR, USE this.toAFD();
 		throw new NotImplementedException();
 	}
 
