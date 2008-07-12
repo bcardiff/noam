@@ -21,6 +21,10 @@ public class Grammar {
 		return distSymbol;
 	}
 	
+	public void setDistSymbol(String s) {
+		distSymbol = s;
+	}
+	
 	public Iterator<String> getNonTerminals() {
 		return nonTerminals.iterator();
 	}
@@ -32,5 +36,34 @@ public class Grammar {
 	public Iterator<Production> getProductions() {
 		return productions.iterator();
 	}
+	
+	public void addNonTerminal(String nt) {
+		nonTerminals.add(nt);
+	}
 		
+	public void addTerminal(String t) {
+		nonTerminals.add(t);
+	}
+	
+	// FIXME: probablemente estos 3 que siguen no se usen
+	public void addProduction(String nt) {
+		productions.add(new Production(nt));
+	}
+	
+	public void addProduction(String nt, String t) {
+		Production p = new Production(nt);
+		p.addRight(t);
+		productions.add(p);
+	}
+	
+	public void addProduction(String ntLeft, String t, String ntRight) {
+		Production p = new Production(ntLeft);
+		p.addRight(t);
+		p.addRight(ntRight);
+		productions.add(p);
+	}
+	
+	public void addProduction(Production p) {
+		productions.add(p);
+	}
 }
