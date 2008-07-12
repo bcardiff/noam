@@ -31,6 +31,26 @@ public class Complete implements AF {
 			}
 		};
 	}
+	
+	public static AF ensureComplete(AF automata){
+		if (isComplete(automata))
+			return automata;
+		else
+			return new Complete(automata);
+	}
+
+	private static boolean isComplete(AF automata) {
+		Iterator<String> itStates = automata.getStates();
+		while(itStates.hasNext()){
+			String state = itStates.next();
+			Iterator<String> itSymbol = automata.getAlphabet();
+			while(itSymbol.hasNext()){
+				if (!automata.getTransitions(state, itSymbol.next()).hasNext())
+					return false;
+			}
+		}
+		return true;
+	}
 
 	private void computeDeadState() {
 		StringBuilder buffer = new StringBuilder();
