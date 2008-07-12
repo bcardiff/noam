@@ -15,6 +15,7 @@ public class ERClosure extends ER {
 	}
 
 	@Override
+	public
 	Object accept(IVisitor v) {
 		return v.visit(this);
 	}

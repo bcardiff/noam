@@ -27,4 +27,7 @@ public class GrBuilder implements IGrammarBuilder {
 		output.setDistSymbol(s);
 	}
 
+	public Grammar getOutput() {
+		return output;
+	}
 }

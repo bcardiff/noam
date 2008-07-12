@@ -1,6 +1,8 @@
 package noam.gr.algorithms;
 
 import java.util.Iterator;
+
+import noam.af.AF;
 import noam.af.Terminal;
 import noam.af.Transition;
 import noam.af.internal.AFNDBuilder;
@@ -9,16 +11,19 @@ import noam.gr.Production;
 
 public class GrToAutomata {
 
-	public Object visit(Grammar g) {
+	public static AF convert(Grammar g) {
 		AFNDBuilder builder = new AFNDBuilder();
 		Iterator<String> ntIt = g.getNonTerminals();
 
 		while (ntIt.hasNext()) {
 			String s = ntIt.next();
 			builder.addState(s);
-			if (s.equals(g.getDistSymbol())) {
-				builder.setInitialState(s);
-			}
+		}		
+		builder.setInitialState(g.getDistSymbol());
+		
+		Iterator<String> tIt = g.getTerminals();
+		while (tIt.hasNext()) {
+			builder.addTerminal(tIt.next());			
 		}
 
 		Iterator<Production> pIt = g.getProductions();
@@ -50,7 +55,7 @@ public class GrToAutomata {
 			Transition t = new Transition(from, label, to);
 			builder.addTransition(t);
 		}
-
+		
 		return builder.getAutomata();
 	}
 }
