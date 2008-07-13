@@ -7,6 +7,7 @@ import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.Complete;
 import noam.af.algorithms.Determination;
 import noam.af.algorithms.Minimization;
+import noam.af.algorithms.Reachables;
 import noam.er.ER;
 import noam.gr.Grammar;
 
@@ -45,8 +46,8 @@ public abstract class FormalismConverter<T> {
 	}
 
 	public AF toAFM() {
-		return AFRenamed.CanonicalNamed(new Minimization(Complete
-				.ensureComplete(toAFD())));
+		return AFRenamed.CanonicalNamed(new Minimization(
+				new Reachables(Complete.ensureComplete(toAFD()))));
 	}
 
 	public abstract Grammar toGR();
