@@ -137,12 +137,10 @@ public class IO {
 	}
 
 	public String print(ER er) {
-		// TODO
-		return null;
+		return er.toString();
 	}
 
 	public String print(Grammar gr) {
-		// TODO
-		return null;
+		return gr.toString();
 	}
 }
