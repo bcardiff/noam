@@ -78,9 +78,5 @@ public class AFToGrFixture {
 				"S", "A");
 		IteratorHelper.assertSameElements(gr.getTerminals(), 
 				"0", "1");
-		
-		System.out.println(gr);
-		Normalization.normalize(gr);
-		System.out.println(gr);
 	}
 }
