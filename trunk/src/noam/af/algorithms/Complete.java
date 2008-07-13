@@ -1,10 +1,10 @@
 package noam.af.algorithms;
 
-import static noam.utils.IteratorHelper.*;
+import static noam.utils.IteratorHelper.addAll;
+import static noam.utils.IteratorHelper.difference;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
 
 import noam.af.AF;
