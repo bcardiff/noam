@@ -5,11 +5,13 @@ import java.io.StringReader;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import noam.af.AF;
+import noam.af.algorithms.AFToGr;
 import noam.er.ER;
 import noam.er.ERToAutomata;
 import noam.er.grammar.ERLexer;
 import noam.er.grammar.ERParser;
 import noam.gr.Grammar;
+import noam.gr.algorithms.Normalization;
 
 public class ErConverter extends FormalismConverter<ER> {
 
@@ -37,8 +39,7 @@ public class ErConverter extends FormalismConverter<ER> {
 
 	@Override
 	public Grammar toGR() {
-		// TODO AFD->GR, USE this.toAFD()
-		return null;
+		return Normalization.normalize(AFToGr.convert(this.toAFD()));
 	}
 
 }

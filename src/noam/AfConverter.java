@@ -7,11 +7,14 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import noam.af.AF;
+import noam.af.algorithms.AFDtoER;
+import noam.af.algorithms.AFToGr;
 import noam.af.grammar.AfLexer;
 import noam.af.grammar.AfParser;
 import noam.af.internal.AFNDBuilder;
 import noam.er.ER;
 import noam.gr.Grammar;
+import noam.gr.algorithms.Normalization;
 
 public class AfConverter extends FormalismConverter<AF> {
 
@@ -36,14 +39,13 @@ public class AfConverter extends FormalismConverter<AF> {
 
 	@Override
 	public ER toER() {
-		// TODO AFD->ER, USE this.toAFD();
-		throw new NotImplementedException();
+		AFDtoER afdToER = new AFDtoER(toAFD());		
+		return afdToER.convert();		
 	}
 
 	@Override
 	public Grammar toGR() {
-		// TODO AFD->GR, USE this.toAFD();
-		throw new NotImplementedException();
+		return Normalization.normalize(AFToGr.convert(this.toAFD()));
 	}
 
 }

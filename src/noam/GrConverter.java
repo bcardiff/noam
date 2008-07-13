@@ -4,6 +4,7 @@ import java.io.StringReader;
 import java.util.Iterator;
 
 import noam.af.AF;
+import noam.af.algorithms.AFDtoER;
 import noam.er.ER;
 import noam.gr.Grammar;
 import noam.gr.Production;
@@ -59,8 +60,8 @@ public class GrConverter extends FormalismConverter<Grammar> {
 
 	@Override
 	public ER toER() {
-		// TODO AFD->ER, USE this.toAFD()
-		return null;
+		AFDtoER afdToER = new AFDtoER(toAFD());		
+		return afdToER.convert();
 	}
 
 	@Override
