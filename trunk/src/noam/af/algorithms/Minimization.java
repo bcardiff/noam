@@ -22,7 +22,7 @@ public class Minimization implements AF {
 	TreeMap<String, Integer> statesToPartition;
 	Function<Transition, Transition> innerToThis;
 
-	// requires Complete, Deterministict AF
+	// requires Complete, Deterministict, All states reachables, AF
 	public Minimization(AF inner) {
 		this.inner = inner;
 

@@ -4,6 +4,7 @@ import noam.af.AF;
 import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.Complete;
 import noam.af.algorithms.Minimization;
+import noam.af.algorithms.Reachables;
 import noam.utils.IteratorHelper;
 
 public class AfmConverter extends AfdConverter {
@@ -24,7 +25,7 @@ public class AfmConverter extends AfdConverter {
 	 * @return
 	 */
 	private static boolean isMinimal(AF automata) {
-		AF minimal = new Minimization(Complete.ensureComplete(automata));
+		AF minimal = new Minimization(new Reachables(Complete.ensureComplete(automata)));
 
 		return IteratorHelper.countOf(minimal.getStates()) == IteratorHelper
 				.countOf(automata.getStates());
