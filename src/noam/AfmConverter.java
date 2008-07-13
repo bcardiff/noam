@@ -1,7 +1,6 @@
 package noam;
 
 import noam.af.AF;
-import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.Complete;
 import noam.af.algorithms.Minimization;
 import noam.af.algorithms.Reachables;
