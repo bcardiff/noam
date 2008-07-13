@@ -5,6 +5,7 @@ import noam.IO;
 import noam.af.AF;
 import noam.gr.Grammar;
 import noam.gr.Production;
+import noam.gr.algorithms.Normalization;
 import noam.utils.IteratorHelper;
 
 import org.junit.Test;
@@ -44,4 +45,42 @@ public class AFToGrFixture {
 				"1");
 	}
 	
+	@Test
+	public void test3() {
+		AF a = IO.parseAF("<(S,A),(0,1),((S,0,A)(A,1,A)),S,(A)>");
+		Grammar gr = AFToGr.convert(a);
+
+		// el output no esta normalizado asi que aparece A->\ aunque A no sea el simbolo distinguido, ver NormalizationFixture.test1()
+		IteratorHelper.assertSameElements(gr.getProductions(), 
+				new Production("A"),
+				new Production("A", "1", "A"),
+				new Production("S", "0", "A"));
+		assertEquals("S", gr.getDistSymbol());
+		IteratorHelper.assertSameElements(gr.getNonTerminals(), 
+				"S", "A");
+		IteratorHelper.assertSameElements(gr.getTerminals(), 
+				"0", "1");
+	}
+	
+	@Test
+	public void test4() {
+		AF a = IO.parseAF("<(S,A),(0,1),((S,0,A)(A,1,A)),S,(S,A)>");
+		Grammar gr = AFToGr.convert(a);
+
+		// el output no esta normalizado asi que aparece A->\ aunque A no sea el simbolo distinguido, ver NormalizationFixture.test2()
+		IteratorHelper.assertSameElements(gr.getProductions(), 
+				new Production("A"),
+				new Production("A", "1", "A"),
+				new Production("S", "0", "A"),
+				new Production("S"));
+		assertEquals("S", gr.getDistSymbol());
+		IteratorHelper.assertSameElements(gr.getNonTerminals(), 
+				"S", "A");
+		IteratorHelper.assertSameElements(gr.getTerminals(), 
+				"0", "1");
+		
+		System.out.println(gr);
+		Normalization.normalize(gr);
+		System.out.println(gr);
+	}
 }

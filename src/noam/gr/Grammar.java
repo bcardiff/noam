@@ -51,19 +51,82 @@ public class Grammar {
 	}
 	
 	public void addProduction(String nt, String t) {
-		Production p = new Production(nt);
-		p.addRight(t);
+		Production p = new Production(nt, t);
 		productions.add(p);
 	}
 	
 	public void addProduction(String ntLeft, String t, String ntRight) {
-		Production p = new Production(ntLeft);
-		p.addRight(t);
-		p.addRight(ntRight);
+		Production p = new Production(ntLeft, t, ntRight);
 		productions.add(p);
 	}
 	
 	public void addProduction(Production p) {
 		productions.add(p);
+	}
+	
+	@Override
+	public String toString() {
+		String s = new String();
+		boolean first = true;
+		
+		s += "<";
+		
+		// No terminales
+		s += "(";
+		for (String nt : nonTerminals) {
+			if (!first) {
+				s += ",";
+			} else {
+				first = false;
+			}
+			s += nt;
+		}
+		s += "),";
+		
+		// Terminales
+		first = true;
+		s += "(";
+		for (String t : terminals) {
+			if (!first) {
+				s += ",";
+			} else {
+				first = false;
+			}
+			s += t;
+		}
+		s += "),";
+		
+		// Producciones
+		s += "(";
+		for (Production p : productions) {
+			first = true;
+			s += "(";
+			// FIXME: esto imprime producciones genericas (que son soportadas por Production) pero a su vez esto hace que potencialmente genere una salida incompatible con la gramatica pedida en el TP
+			for (String t : p.getLeft()) {
+				if (!first) {
+					s += ",";
+				} else {
+					first = false;
+				}
+				s += t; 
+			}
+			if (p.getRight().size() == 0) {
+				s += ",LAMBDA";
+			} else {
+				for (String t : p.getRight()) {
+					s += ",";
+					s += t;
+				}
+			}
+			s += ")";
+		}
+		s += "),";
+		
+		// Simbolo distinguido
+		s += distSymbol;
+		
+		s += ">";
+		
+		return s;
 	}
 }
