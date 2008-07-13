@@ -42,7 +42,7 @@ public class Grammar {
 	}
 		
 	public void addTerminal(String t) {
-		nonTerminals.add(t);
+		terminals.add(t);
 	}
 	
 	// FIXME: probablemente estos 3 que siguen no se usen
