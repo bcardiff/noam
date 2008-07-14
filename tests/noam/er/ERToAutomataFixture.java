@@ -2,6 +2,7 @@ package noam.er;
 
 import noam.IO;
 import noam.af.AF;
+import noam.utils.IteratorHelper;
 
 import org.junit.Test;
 
@@ -16,6 +17,21 @@ public class ERToAutomataFixture {
 		AF af = (AF) er.accept(new ERToAutomata());
 		System.out.append(IO.printDot(af));
 	}
-	
+
+	@Test
+	public void alphabetCreated() {
+		assertAlphapetOfAf(IO.parseER("a"),"a");
+		assertAlphapetOfAf(IO.parseER("a.b"),"a","b");
+		assertAlphapetOfAf(IO.parseER("a|b"),"a","b");
+		assertAlphapetOfAf(IO.parseER("c*"),"c");
+		assertAlphapetOfAf(IO.parseER("LAMBDA"));//empty alphabet
+		assertAlphapetOfAf(IO.parseER("VACIO"));//empty alphabet
+		assertAlphapetOfAf(IO.parseER("((a|b.c)|d*).VACIO"),"a","b","c","d");
+	}
+
+	private void assertAlphapetOfAf(ER er, String... symbols) {
+		AF af = (AF) er.accept(new ERToAutomata());
+		IteratorHelper.assertSameElements(af.getAlphabet(), symbols);		
+	}
 	
 }
