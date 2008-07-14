@@ -9,6 +9,8 @@ public class ERFixture {
 	
 	@Test
 	public void toStringTest(){
+		assertEquals("LAMBDA", new ERLambda().toString());
+		assertEquals("VACIO", new EREmpty().toString());
 		assertEquals("a", t("a").toString());
 		assertEquals("a.b", c(t("a"),t("b")).toString());
 		assertEquals("a|b", o(t("a"),t("b")).toString());
