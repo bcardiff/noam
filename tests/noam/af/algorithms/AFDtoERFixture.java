@@ -21,26 +21,20 @@ public class AFDtoERFixture {
 	//No anda. pero no se si esta bien el test
 	@Test
 	public void test1(){
-		AFNDBuilder ab = new AFNDBuilder();
-		ab.addState("A");
-		ab.addState("B");
-				
-		ab.setInitialState("A");
-		ab.addFinalState("B");
-		
-		ab.addTransition(new Transition("A", "a", "B"));
-		ab.addTransition(new Transition("A", "b", "B"));
-		ab.addTransition(new Transition("B", "b", "A"));
-		ab.addTransition(new Transition("B", "a", "B"));
-		
-		AF a = new Determination(ab.getAutomata());
-		System.out.println(IO.printDot(a));
-		
-		ER er = IO.parseER("(a|b).(b.a|b.b|a)*");
-		
-		ER traducida= (new AFDtoER(a)).convert();
-		
-		assertEquals(er, traducida);
+		AF ab = IO.parseAF("<(A,B),(a,b),((A,a,B)(A,b,B)(B,a,B)(B,b,A)),A,(B)>");
+		//AF a = new Determination(ab);
+		AF a = ab;
+		ER er = IO.parseER("(a|b).(b.a|b.b|a)*");		
+		ER traducida= (new AFDtoER(a)).convert();		
+		assertEquals(er.toString(), traducida.toString());
+	}
+	
+	@Test
+	public void test2() throws Exception {
+		AF a = IO.parseAF("<(A),(a),((A,a,A)),A,(A)>");
+		ER exp = IO.parseER("((a|LAMBDA).(a|LAMBDA)*.(a|LAMBDA))|(a|LAMBDA)");
+		ER act = (new AFDtoER(a)).convert();
+		assertEquals(exp.toString(), act.toString());
 	}
 	
 }

@@ -11,6 +11,7 @@ import noam.er.ERChoice;
 import noam.er.ERClosure;
 import noam.er.ERConcat;
 import noam.er.EREmpty;
+import noam.er.ERLambda;
 import noam.er.ERTerminal;
 import noam.utils.IteratorHelper;
 
@@ -26,9 +27,15 @@ public class AFDtoER {
 
 		Iterator<String> it = automaton.getStates();
 		int i = 1;
+		enumStates.put(i, automaton.getInitialState()); // initial state with
+														// index=1
+		i++;
 		while (it.hasNext()) {
-			enumStates.put(i, it.next());
-			i++;
+			String state = it.next();
+			if (!state.equals(automaton.getInitialState())) {
+				enumStates.put(i, state);
+				i++;
+			}
 		}
 	}
 
@@ -37,7 +44,7 @@ public class AFDtoER {
 		ER res = new EREmpty();
 
 		// Cuento los estados finales
-		int n = IteratorHelper.countOf(automaton.getFinalStates());
+		int n = IteratorHelper.countOf(automaton.getStates());
 
 		Iterator<String> iter = automaton.getFinalStates();
 
@@ -45,11 +52,7 @@ public class AFDtoER {
 
 			ER newChoice = rijK(enumStates.get(1), iter.next(), n);
 
-			if (res instanceof EREmpty) {
-				res = newChoice;
-			} else {
-				res = new ERChoice(res, newChoice);
-			}
+			res = doChoice(res, newChoice);
 		}
 
 		return res;
@@ -69,10 +72,8 @@ public class AFDtoER {
 		ER loop = doClosure(rijK(kState, kState, k - 1));
 		ER direct = rijK(from, to, k - 1);
 
-
 		return doChoice(doConcat(doConcat(firstPath, loop), lastPath), direct);
 	}
-
 
 	private ER basicStep(String from, String to) {
 
@@ -84,53 +85,64 @@ public class AFDtoER {
 			Transition t = it.next();
 
 			if (t.getTo().equals(to)) {
-				res = doChoice( res, new ERTerminal(t.getLabel()));
+				res = doChoice(res, new ERTerminal(t.getLabel()));
 			}
 		}
 
 		if (from.equals(to)) {
-			doChoice(res, new ERTerminal(Terminal.LAMBDA));
+			res = doChoice(res, new ERLambda());
 		}
 
 		return res;
 	}
-	
 
 	private ER doConcat(ER erLeft, ER erRigth) {
-		
-		if ( erLeft instanceof EREmpty ){
-			return erRigth;
-		}
-		
-		if ( erRigth instanceof EREmpty ){
+
+		if (erLeft instanceof EREmpty) {
 			return erLeft;
 		}
-		
-		return new ERConcat( erLeft , erRigth );
-		
+
+		if (erRigth instanceof EREmpty) {
+			return erRigth;
+		}
+
+		if (erLeft instanceof ERLambda) {
+			return erRigth;
+		}
+
+		if (erRigth instanceof ERLambda) {
+			return erLeft;
+		}
+
+		return new ERConcat(erLeft, erRigth);
+
 	}
 
-	private ER doChoice(ER erLeft, ER erRigth){
-				
-		if ( erLeft instanceof EREmpty ){
+	private ER doChoice(ER erLeft, ER erRigth) {
+
+		if (erLeft instanceof EREmpty) {
 			return erRigth;
 		}
-		
-		if ( erRigth instanceof EREmpty ){
+
+		if (erRigth instanceof EREmpty) {
 			return erLeft;
 		}
-		
-		return new ERChoice( erLeft , erRigth );
-		
+
+		if ((erLeft instanceof ERLambda) && (erRigth instanceof ERLambda)) {
+			return erLeft;
+		}
+
+		return new ERChoice(erLeft, erRigth);
+
 	}
-	
-	private ER doClosure(ER erInner){
-		
-		if ( erInner instanceof EREmpty ){
+
+	private ER doClosure(ER erInner) {
+
+		if (erInner instanceof EREmpty || erInner instanceof ERLambda) {
 			return erInner;
 		}
 		return new ERClosure(erInner);
-		
+
 	}
-	
+
 }
