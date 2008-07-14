@@ -28,7 +28,7 @@ public class AFDtoER {
 		Iterator<String> it = automaton.getStates();
 		int i = 1;
 		enumStates.put(i, automaton.getInitialState()); // initial state with
-														// index=1
+		// index=1
 		i++;
 		while (it.hasNext()) {
 			String state = it.next();
@@ -139,7 +139,7 @@ public class AFDtoER {
 	private ER doClosure(ER erInner) {
 
 		if (erInner instanceof EREmpty || erInner instanceof ERLambda) {
-			return erInner;
+			return new ERLambda();
 		}
 		return new ERClosure(erInner);
 
