@@ -21,4 +21,11 @@ public class MinimizationFixture {
 		AF b = new Minimization(a);
 		System.out.append(IO.printDot(b));
 	}
+	
+	@Test
+	public void testTerminal() throws Exception {
+		AF a = new Reachables(Complete.ensureComplete(IO.parseAF("<(A,B),(a),((A,a,B)),A,(B)>")));
+		AF b = new Minimization(a);
+		System.out.append(IO.printDot(b));
+	}
 }

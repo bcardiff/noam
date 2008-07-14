@@ -28,4 +28,11 @@ public class CompleteFixture {
 		AF b = Complete.ensureComplete(a);
 		assertSame(a, b);
 	}
+	
+	@Test
+	public void transitionsOfDeadState() {
+		AF a = new Complete(IO.parseAF("<(A,B),(a),((A,a,B)),A,(B)>"));
+		assertSameElements(a.getTransitions("ZAB"), new Transition("ZAB","a","ZAB"));
+		assertSameElements(a.getTransitions("ZAB", "a"), new Transition("ZAB","a","ZAB"));
+	}
 }
