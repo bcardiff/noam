@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.Function;
@@ -184,4 +185,8 @@ public class Minimization implements AF {
 		return inner.getAlphabet();
 	}
 
+	@Override
+	public String toString() {
+		return IO.print(this);
+	}
 }

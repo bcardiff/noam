@@ -1,5 +1,7 @@
 package noam.af;
 
+import java.util.Comparator;
+
 public class Transition {
 	private final String from;
 
@@ -35,9 +37,26 @@ public class Transition {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return from.hashCode() + label.hashCode() + to.hashCode();
+	}
+
+	public static Comparator<Transition> comparator() {
+		return new Comparator<Transition>() {
+			@Override
+			public int compare(Transition o1, Transition o2) {
+				int res;
+				res = o1.getFrom().compareTo(o2.getFrom());
+				if (res != 0)
+					return res;
+				res = o1.getLabel().compareTo(o2.getLabel());
+				if (res != 0)
+					return res;
+				res = o1.getTo().compareTo(o2.getTo());
+				return res;
+			}
+		};
 	}
 }

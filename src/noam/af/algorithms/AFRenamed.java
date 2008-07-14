@@ -3,6 +3,7 @@ package noam.af.algorithms;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.Function;
@@ -80,5 +81,10 @@ public class AFRenamed implements AF {
 
 	public Iterator<String> getAlphabet() {
 		return automaton.getAlphabet();
+	}
+
+	@Override
+	public String toString() {
+		return IO.print(this);
 	}
 }

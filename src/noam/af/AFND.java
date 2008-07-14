@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import noam.IO;
+
 public class AFND implements AF {
 
 	// cada nodo tiene asociada una lista de adyacencia en la cual la transicion
@@ -85,5 +87,10 @@ public class AFND implements AF {
 	
 	public Iterator<String> getAlphabet() {
 		return alphabet.iterator();
+	}
+	
+	@Override
+	public String toString() {
+		return IO.print(this);
 	}
 }

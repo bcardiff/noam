@@ -6,6 +6,7 @@ import static noam.utils.IteratorHelper.intersect;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.InvalidStateException;
 import noam.af.Transition;
@@ -77,4 +78,8 @@ public class Reachables implements AF {
 		return inner.getAlphabet();
 	}
 
+	@Override
+	public String toString() {
+		return IO.print(this);
+	}
 }

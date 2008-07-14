@@ -1,7 +1,10 @@
 package noam;
 
+import static noam.utils.IteratorHelper.addAll;
+import static noam.utils.IteratorHelper.sorted;
 import java.io.StringReader;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
@@ -88,34 +91,40 @@ public class IO {
 		return sb.toString();
 	}
 
-	public String print(AF af) {
+	public static String print(AF af) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<");
-		appendListStrings(sb, af.getStates());
+		appendListStrings(sb, sorted(af.getStates()));
 		sb.append(",");
-		appendListStrings(sb, af.getAlphabet());
+		appendListStrings(sb, sorted(af.getAlphabet()));
 		sb.append(",");
 		appendListTransitions(sb, af);
 		sb.append(",");
 		sb.append(af.getInitialState());
 		sb.append(",");
-		appendListStrings(sb, af.getFinalStates());
+		appendListStrings(sb, sorted(af.getFinalStates()));
 		sb.append(">");
 		return sb.toString();
 	}
 
-	private void appendListTransitions(StringBuilder sb, AF af) {
+	private static void appendListTransitions(StringBuilder sb, AF af) {
 		sb.append("(");
-		Iterator<String> states = af.getStates();
+		Iterator<String> states = sorted(af.getStates());
 		while (states.hasNext()) {
 			String s = (String) states.next();
-			Iterator<Transition> transitions = af.getTransitions(s);
+			TreeSet<Transition> tset = new TreeSet<Transition>(Transition
+					.comparator());
+			addAll(tset, af.getTransitions(s));
+			Iterator<Transition> transitions = tset.iterator();
 			while (transitions.hasNext()) {
 				Transition t = (Transition) transitions.next();
 				sb.append("(");
 				sb.append(t.getFrom());
 				sb.append(",");
-				sb.append(t.getLabel());
+				if (t.getLabel().equals(Terminal.LAMBDA))
+					sb.append("LAMBDA");
+				else
+					sb.append(t.getLabel());
 				sb.append(",");
 				sb.append(t.getTo());
 				sb.append(")");
@@ -124,7 +133,8 @@ public class IO {
 		sb.append(")");
 	}
 
-	private void appendListStrings(StringBuilder sb, Iterator<String> source) {
+	private static void appendListStrings(StringBuilder sb,
+			Iterator<String> source) {
 		sb.append("(");
 		if (source.hasNext()) {
 			sb.append(source.next());
@@ -136,11 +146,11 @@ public class IO {
 		sb.append(")");
 	}
 
-	public String print(ER er) {
+	public static String print(ER er) {
 		return er.toString();
 	}
 
-	public String print(Grammar gr) {
+	public static String print(Grammar gr) {
 		return gr.toString();
 	}
 }

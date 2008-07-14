@@ -5,6 +5,7 @@ import java.io.StringReader;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import noam.af.AF;
+import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.AFToGr;
 import noam.er.ER;
 import noam.er.ERToAutomata;
@@ -29,7 +30,7 @@ public class ErConverter extends FormalismConverter<ER> {
 
 	@Override
 	public AF toAF() {
-		return (AF) formalism.accept(new ERToAutomata());
+		return AFRenamed.CanonicalNamed((AF) formalism.accept(new ERToAutomata()));
 	}
 
 	@Override

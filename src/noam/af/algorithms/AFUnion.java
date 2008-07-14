@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.IteratorHelper;
@@ -91,4 +92,8 @@ public class AFUnion implements AF {
 		return alphabet.iterator();
 	}
 
+	@Override
+	public String toString() {
+		return IO.print(this);
+	}
 }
