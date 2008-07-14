@@ -2,10 +2,6 @@ package noam;
 
 import java.io.StringReader;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
 import noam.af.AF;
 import noam.af.algorithms.AFDtoER;
 import noam.af.algorithms.AFToGr;
@@ -15,6 +11,8 @@ import noam.af.internal.AFNDBuilder;
 import noam.er.ER;
 import noam.gr.Grammar;
 import noam.gr.algorithms.Normalization;
+import antlr.RecognitionException;
+import antlr.TokenStreamException;
 
 public class AfConverter extends FormalismConverter<AF> {
 
