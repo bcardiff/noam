@@ -32,8 +32,8 @@ public class Complete implements AF {
 			}
 		};
 	}
-	
-	public static AF ensureComplete(AF automata){
+
+	public static AF ensureComplete(AF automata) {
 		if (isComplete(automata))
 			return automata;
 		else
@@ -42,10 +42,10 @@ public class Complete implements AF {
 
 	private static boolean isComplete(AF automata) {
 		Iterator<String> itStates = automata.getStates();
-		while(itStates.hasNext()){
+		while (itStates.hasNext()) {
 			String state = itStates.next();
 			Iterator<String> itSymbol = automata.getAlphabet();
-			while(itSymbol.hasNext()){
+			while (itSymbol.hasNext()) {
 				if (!automata.getTransitions(state, itSymbol.next()).hasNext())
 					return false;
 			}
@@ -95,7 +95,7 @@ public class Complete implements AF {
 						return new Transition(from, s, deadState);
 					}
 				});
-		
+
 		if (from.equals(deadState)) {
 			return transitionsToDeadState;
 		}
@@ -105,12 +105,17 @@ public class Complete implements AF {
 	}
 
 	public Iterator<Transition> getTransitions(String from, String label) {
-		Iterator<Transition> it = inner.getTransitions(from, label);
-		if (it.hasNext())
-			return it;
-		else
+		if (from.equals(deadState)) {
 			return new SingletonIterator<Transition>(new Transition(from,
 					label, deadState));
+		} else {
+			Iterator<Transition> it = inner.getTransitions(from, label);
+			if (it.hasNext())
+				return it;
+			else
+				return new SingletonIterator<Transition>(new Transition(from,
+						label, deadState));
+		}
 	}
 
 	public String getDeadState() {
