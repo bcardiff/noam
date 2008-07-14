@@ -1,5 +1,6 @@
 package noam.af.algorithms;
 
+import static noam.utils.IteratorHelper.assertSameElements;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static noam.utils.IteratorHelper.contains;
@@ -58,5 +59,14 @@ public class ReachablesFixture {
 		AF a2 = new Reachables(a1);
 		
 		a2.getTransitions("F");
-	}	
+	}
+	
+
+	@Test
+	public void testEmptyAfIsGenerated(){
+		AF a1 = IO.parseAF("<(I,F),(a),(),I,(F)>");
+		AF a2 = new Reachables(a1);
+		assertSameElements(a2.getStates(),"I");
+		assertSameElements(a2.getFinalStates());
+	}
 }

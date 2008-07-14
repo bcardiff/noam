@@ -1,19 +1,11 @@
 package noam.af.algorithms;
 
+import static org.junit.Assert.assertEquals;
 import noam.IO;
 import noam.af.AF;
-import noam.af.Transition;
-import noam.af.internal.AFNDBuilder;
 import noam.er.ER;
-import noam.er.ERChoice;
-import noam.er.ERClosure;
-import noam.er.ERConcat;
-import noam.er.ERTerminal;
-import noam.er.ERToAutomata;
-import noam.er.grammar.ERParser;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 public class AFDtoERFixture {
 	

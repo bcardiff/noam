@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 import junit.framework.Assert;
 
@@ -70,5 +71,11 @@ public class IteratorHelper {
 			res++;
 		}
 		return res;
+	}
+	
+	public static Iterator<String> sorted(Iterator<String> it){
+		TreeSet<String> set = new TreeSet<String>();
+		addAll(set, it);
+		return set.iterator();
 	}
 }

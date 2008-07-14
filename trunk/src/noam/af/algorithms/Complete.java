@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.Transition;
 import noam.utils.Function;
@@ -114,5 +115,10 @@ public class Complete implements AF {
 
 	public String getDeadState() {
 		return deadState;
+	}
+
+	@Override
+	public String toString() {
+		return IO.print(this);
 	}
 }

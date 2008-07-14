@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import noam.IO;
 import noam.af.AF;
 import noam.af.InvalidStateException;
 import noam.af.Terminal;
@@ -254,4 +255,8 @@ public class Determination implements AF {
 		return inner.getAlphabet();
 	}
 
+	@Override
+	public String toString() {
+		return IO.print(this);
+	}
 }

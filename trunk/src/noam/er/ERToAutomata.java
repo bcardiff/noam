@@ -104,28 +104,31 @@ public class ERToAutomata implements IVisitor {
 		return res;
 	}
 
-	public AF visit(EREmpty e) {
-		
+	public AF visit(EREmpty e) {		
 		AFNDBuilder ab = new AFNDBuilder();
+		ab.addState("A");
+		ab.addState("Z");
 		ab.setInitialState("A");
-		ab.addFinalState("Z");
-				
+		ab.addFinalState("Z");				
 		return ab.getAutomata();
 	}
 
 	public AF visit(ERLambda e) {
 
 		AFNDBuilder ab = new AFNDBuilder();
+		ab.addState("A");
+		ab.addState("Z");		
 		ab.setInitialState("A");
 		ab.addFinalState("Z");
-		ab.addTransition(new Transition("A", Terminal.LAMBDA , "Z"));
-		
+		ab.addTransition(new Transition("A", Terminal.LAMBDA , "Z"));		
 		return ab.getAutomata();
 	}
 
 	public Object visit(ERTerminal e) {
 
 		AFNDBuilder ab = new AFNDBuilder();
+		ab.addState("A");
+		ab.addState("Z");		
 		ab.setInitialState("A");
 		ab.addFinalState("Z");
 		ab.addTransition(new Transition("A", e.getTerminal() , "Z"));
