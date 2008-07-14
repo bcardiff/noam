@@ -16,15 +16,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AFDtoERFixture {
-
 	
-	//No anda. pero no se si esta bien el test
 	@Test
 	public void test1(){
 		AF ab = IO.parseAF("<(A,B),(a,b),((A,a,B)(A,b,B)(B,a,B)(B,b,A)),A,(B)>");
-		//AF a = new Determination(ab);
 		AF a = ab;
-		ER er = IO.parseER("(a|b).(b.a|b.b|a)*");		
+		//ER er = IO.parseER("(a|b).(b.a|b.b|a)*");		
+		ER er = IO.parseER("((b|a|b|a).(((b.(b|a))|a|LAMBDA)*).((b.(b|a))|a|LAMBDA))|b|a|b|a");
 		ER traducida= (new AFDtoER(a)).convert();		
 		assertEquals(er.toString(), traducida.toString());
 	}
