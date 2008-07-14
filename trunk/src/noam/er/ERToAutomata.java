@@ -129,7 +129,7 @@ public class ERToAutomata implements IVisitor {
 		ab.setInitialState("A");
 		ab.addFinalState("Z");
 		ab.addTransition(new Transition("A", e.getTerminal() , "Z"));
-		
+		ab.addTerminal(e.getTerminal());
 		return ab.getAutomata();
 	}
 
