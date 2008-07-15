@@ -21,15 +21,21 @@ public abstract class FormalismConverter<T> {
 		this.formalism = null;
 	}
 
+	public String getInput() {
+		return input;
+	}
+
 	public boolean isFormalismOk() {
 		try {
 			formalism = parseInput();
 			return true;
 		} catch (RecognitionException e) {
-			e.printStackTrace();
+			System.out.append(e.getMessage() + " line: "
+					+ Integer.toString(e.getLine()) + " column: "
+					+ Integer.toString(e.getColumn()) + "\n");
 			return false;
 		} catch (TokenStreamException e) {
-			e.printStackTrace();
+			System.out.append(e.getMessage()+ "\n");
 			return false;
 		}
 	}
@@ -46,8 +52,8 @@ public abstract class FormalismConverter<T> {
 	}
 
 	public AF toAFM() {
-		return AFRenamed.CanonicalNamed(new Minimization(
-				new Reachables(Complete.ensureComplete(toAFD()))));
+		return AFRenamed.CanonicalNamed(new Minimization(new Reachables(
+				Complete.ensureComplete(toAFD()))));
 	}
 
 	public abstract Grammar toGR();
