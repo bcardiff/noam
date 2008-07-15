@@ -2,8 +2,6 @@ package noam;
 
 import static org.junit.Assert.assertTrue;
 
-import noam.af.AF;
-
 import org.junit.Test;
 
 public class AfFormalismConverterFixture extends BaseFormalismConverterFixture {

@@ -6,7 +6,7 @@ import noam.af.AF;
 import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.AFToGr;
 import noam.er.ER;
-import noam.er.ERToAutomata;
+import noam.er.algorithms.ERToAutomata;
 import noam.er.grammar.ERLexer;
 import noam.er.grammar.ERParser;
 import noam.gr.Grammar;

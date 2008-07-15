@@ -1,4 +1,13 @@
-package noam.er;
+package noam.er.algorithms;
+
+import noam.er.ER;
+import noam.er.ERChoice;
+import noam.er.ERClosure;
+import noam.er.ERConcat;
+import noam.er.EREmpty;
+import noam.er.ERLambda;
+import noam.er.ERTerminal;
+import noam.er.IVisitor;
 
 public class ErPrinter implements IVisitor {
 
