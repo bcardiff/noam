@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import noam.af.AF;
-import noam.af.Terminal;
 import noam.af.Transition;
 import noam.er.ER;
 import noam.er.ERChoice;
@@ -43,7 +42,7 @@ public class AFDtoER {
 
 		ER res = new EREmpty();
 
-		// Cuento los estados finales
+		// Cuento la cantidad de estados
 		int n = IteratorHelper.countOf(automaton.getStates());
 
 		Iterator<String> iter = automaton.getFinalStates();

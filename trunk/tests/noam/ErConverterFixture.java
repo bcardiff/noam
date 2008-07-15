@@ -1,24 +1,17 @@
 package noam;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class ErConverterFixture {
+public class ErConverterFixture extends BaseFormalismConverterFixture {
 
 	private ErConverter c(String input) {
 		ErConverter c = new ErConverter(input);
 		assertTrue(c.isFormalismOk());
 		return c;
-	}
-
-	private void assertCanConvert(ErConverter c) {
-		c.toAF();
-		c.toAFD();
-		c.toAFM();
-		c.toER();
-		c.toGR();
 	}
 
 	@Test
@@ -82,5 +75,41 @@ public class ErConverterFixture {
 		assertEquals("<(A,B),(a),((A,LAMBDA,A)(A,a,B)(B,LAMBDA,A)),A,(A)>", IO
 				.print(c.toAF()));
 		assertCanConvert(c);
+	}
+
+	@Test
+	public void testVacioClosure() {
+		ErConverter c = c("VACIO*");
+		assertCanConvert(c);
+	}
+
+	@Test
+	public void testVacioConcat() {
+		ErConverter c = c("VACIO.a");
+		assertCanConvert(c);
+	}
+
+	@Test
+	public void testVacioConcat2() {
+		ErConverter c = c("a.VACIO");
+		assertCanConvert(c);
+	}
+
+	@Test
+	public void testLambdaChoice() {
+		ErConverter c = c("a|LAMBDA");
+		assertCanConvert(c);
+	}
+	
+	@Test
+	public void badInput() {
+		System.out.append("\nbadInput:\n");
+		ErConverter c;
+		c = new ErConverter("<(A),(a),((A,a,A)),A,()>");
+		assertFalse(c.isFormalismOk());
+		c = new ErConverter("<(A,B),(a),((A,a,B)),A>");
+		assertFalse(c.isFormalismOk());
+		c = new ErConverter("saasd");
+		assertFalse(c.isFormalismOk());		
 	}
 }
