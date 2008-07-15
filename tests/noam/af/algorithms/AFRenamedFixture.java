@@ -2,9 +2,6 @@ package noam.af.algorithms;
 
 import static noam.utils.IteratorHelper.assertSameElements;
 import static org.junit.Assert.assertEquals;
-
-import java.io.Console;
-
 import noam.IO;
 import noam.af.AF;
 import noam.af.Transition;

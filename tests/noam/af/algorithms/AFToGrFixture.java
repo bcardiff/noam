@@ -5,7 +5,6 @@ import noam.IO;
 import noam.af.AF;
 import noam.gr.Grammar;
 import noam.gr.Production;
-import noam.gr.algorithms.Normalization;
 import noam.utils.IteratorHelper;
 
 import org.junit.Test;

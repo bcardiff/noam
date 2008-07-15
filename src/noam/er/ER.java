@@ -1,5 +1,7 @@
 package noam.er;
 
+import noam.er.algorithms.ErPrinter;
+
 public abstract class ER {
 
 	public ER() {

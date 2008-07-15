@@ -1,9 +1,10 @@
 package noam.af.algorithms;
 
-import static org.junit.Assert.*;
 import static noam.utils.IteratorHelper.assertSameElements;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.Console;
 import java.util.Iterator;
 
 import noam.IO;

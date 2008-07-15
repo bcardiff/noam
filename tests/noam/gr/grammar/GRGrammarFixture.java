@@ -2,10 +2,6 @@ package noam.gr.grammar;
 
 import java.io.StringReader;
 
-
-import noam.af.Transition;
-import noam.af.grammar.AfLexer;
-import noam.af.grammar.AfParser;
 import noam.gr.IGrammarBuilder;
 import noam.gr.Production;
 

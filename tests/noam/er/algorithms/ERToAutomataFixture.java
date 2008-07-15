@@ -1,7 +1,10 @@
-package noam.er;
+package noam.er.algorithms;
 
 import noam.IO;
 import noam.af.AF;
+import noam.er.ER;
+import noam.er.ERClosure;
+import noam.er.ERTerminal;
 import noam.utils.IteratorHelper;
 
 import org.junit.Test;

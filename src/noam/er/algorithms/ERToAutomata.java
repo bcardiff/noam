@@ -1,4 +1,4 @@
-package noam.er;
+package noam.er.algorithms;
 
 import java.util.Iterator;
 
@@ -8,6 +8,13 @@ import noam.af.Transition;
 import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.AFUnion;
 import noam.af.internal.AFNDBuilder;
+import noam.er.ERChoice;
+import noam.er.ERClosure;
+import noam.er.ERConcat;
+import noam.er.EREmpty;
+import noam.er.ERLambda;
+import noam.er.ERTerminal;
+import noam.er.IVisitor;
 import noam.utils.JoinIterator;
 import noam.utils.StringHelper;
 
