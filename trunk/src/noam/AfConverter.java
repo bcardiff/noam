@@ -1,6 +1,6 @@
 package noam;
 
-import java.io.StringReader;
+import java.io.Reader;
 
 import noam.af.AF;
 import noam.af.algorithms.AFDtoER;
@@ -19,10 +19,13 @@ public class AfConverter extends FormalismConverter<AF> {
 	public AfConverter(String input) {
 		super(input);
 	}
-
+	
+	public AfConverter(Reader reader) {
+		super(reader);
+	}
+	
 	@Override
-	public AF parseInput() throws RecognitionException, TokenStreamException {
-		StringReader reader = new StringReader(input);
+	public AF parseInput(Reader reader) throws RecognitionException, TokenStreamException {
 		AfLexer lexer = new AfLexer(reader);
 		AfParser parser = new AfParser(lexer);
 		AFNDBuilder builder = new AFNDBuilder();

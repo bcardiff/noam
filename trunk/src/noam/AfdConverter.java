@@ -1,5 +1,6 @@
 package noam;
 
+import java.io.Reader;
 import java.util.Iterator;
 
 import noam.af.AF;
@@ -10,6 +11,10 @@ public class AfdConverter extends AfConverter {
 
 	public AfdConverter(String input) {
 		super(input);
+	}
+
+	public AfdConverter(Reader reader) {
+		super(reader);
 	}
 
 	@Override

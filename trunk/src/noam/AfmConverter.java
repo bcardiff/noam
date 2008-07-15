@@ -1,5 +1,7 @@
 package noam;
 
+import java.io.Reader;
+
 import noam.af.AF;
 import noam.af.algorithms.Complete;
 import noam.af.algorithms.Minimization;
@@ -10,6 +12,10 @@ public class AfmConverter extends AfdConverter {
 
 	public AfmConverter(String input) {
 		super(input);
+	}
+
+	public AfmConverter(Reader reader) {
+		super(reader);
 	}
 
 	@Override

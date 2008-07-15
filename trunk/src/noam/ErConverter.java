@@ -1,9 +1,7 @@
 package noam;
 
-import java.io.StringReader;
+import java.io.Reader;
 
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
 import noam.af.AF;
 import noam.af.algorithms.AFRenamed;
 import noam.af.algorithms.AFToGr;
@@ -13,6 +11,8 @@ import noam.er.grammar.ERLexer;
 import noam.er.grammar.ERParser;
 import noam.gr.Grammar;
 import noam.gr.algorithms.Normalization;
+import antlr.RecognitionException;
+import antlr.TokenStreamException;
 
 public class ErConverter extends FormalismConverter<ER> {
 
@@ -20,9 +20,12 @@ public class ErConverter extends FormalismConverter<ER> {
 		super(input);
 	}
 
+	public ErConverter(Reader reader) {
+		super(reader);
+	}
+
 	@Override
-	public ER parseInput() throws RecognitionException, TokenStreamException {
-		StringReader reader = new StringReader(input);
+	public ER parseInput(Reader reader) throws RecognitionException, TokenStreamException {
 		ERLexer lexer = new ERLexer(reader);
 		ERParser parser = new ERParser(lexer);
 		return parser.regexp();

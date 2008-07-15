@@ -1,6 +1,6 @@
 package noam;
 
-import java.io.StringReader;
+import java.io.Reader;
 import java.util.Iterator;
 
 import noam.af.AF;
@@ -19,6 +19,10 @@ public class GrConverter extends FormalismConverter<Grammar> {
 
 	public GrConverter(String input) {
 		super(input);
+	}
+
+	public GrConverter(Reader reader) {
+		super(reader);
 	}
 
 	@Override
@@ -43,9 +47,8 @@ public class GrConverter extends FormalismConverter<Grammar> {
 	}
 
 	@Override
-	public Grammar parseInput() throws RecognitionException,
+	public Grammar parseInput(Reader reader) throws RecognitionException,
 			TokenStreamException {
-		StringReader reader = new StringReader(input);
 		GrLexer lexer = new GrLexer(reader);
 		GrParser parser = new GrParser(lexer);
 		GrBuilder builder = new GrBuilder();

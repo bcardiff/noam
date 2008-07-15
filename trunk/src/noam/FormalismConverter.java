@@ -1,5 +1,8 @@
 package noam;
 
+import java.io.Reader;
+import java.io.StringReader;
+
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import noam.af.AF;
@@ -13,11 +16,19 @@ import noam.gr.Grammar;
 
 public abstract class FormalismConverter<T> {
 
-	protected String input;
+	private String input;
+	private Reader reader;
 	protected T formalism;
 
 	public FormalismConverter(String input) {
 		this.input = input;
+		this.reader = new StringReader(input);
+		this.formalism = null;
+	}
+	
+	public FormalismConverter(Reader reader) {
+		this.input = "--NOT AVAILABLE--";
+		this.reader = reader;
 		this.formalism = null;
 	}
 
@@ -27,7 +38,7 @@ public abstract class FormalismConverter<T> {
 
 	public boolean isFormalismOk() {
 		try {
-			formalism = parseInput();
+			formalism = parseInput(reader);
 			return true;
 		} catch (RecognitionException e) {
 			System.out.append(e.getMessage() + " line: "
@@ -40,7 +51,7 @@ public abstract class FormalismConverter<T> {
 		}
 	}
 
-	public abstract T parseInput() throws RecognitionException,
+	public abstract T parseInput(Reader reader) throws RecognitionException,
 			TokenStreamException;
 
 	public abstract ER toER();
