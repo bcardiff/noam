@@ -1,5 +1,6 @@
 package noam.gr.algorithms;
 
+import static noam.utils.IteratorHelper.addAll;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ public class Normalization {
 	public static Grammar normalize(Grammar g) {
 		Set<Production> lambda = getLowerLambdaProductions(g);
 		HashSet<Production> newProductions = new HashSet<Production>();
-		
+
 		for (Production lambdaProd : lambda) {
 			Iterator<Production> pIt = g.getProductions();
 			String nt = lambdaProd.getLeft().peekFirst();
@@ -34,11 +35,66 @@ public class Normalization {
 				}
 			}
 		}
-		
+
 		removeProductions(g, lambda);
 		addProductions(g, newProductions.iterator());
-		
+
+		removeNonExpandableProductions(g);
+
 		return g;
+	}
+
+	/**
+	 * for productions A -> xB if there are no production B -> then remove A ->
+	 * xB, if A is not the distinguished symbol.
+	 * 
+	 * @param g
+	 */
+	public static void removeNonExpandableProductions(Grammar g) {
+		Iterator<Production> productions;
+		// collect defined non terminals
+		Set<String> definedNonTerminals = getDefinedNonTerminals(g);
+
+		// remove productions
+		Set<String> terminals = new HashSet<String>();
+		addAll(terminals, g.getTerminals());
+		productions = g.getProductions();
+		while (productions.hasNext()) {
+			if (!isExpandable(terminals, definedNonTerminals, productions
+					.next())) {
+				productions.remove();
+			}
+		}
+
+		// remove non terminals
+		definedNonTerminals = getDefinedNonTerminals(g);
+		Iterator<String> nonTerminals = g.getNonTerminals();
+		while (nonTerminals.hasNext()) {
+			String nonTerminal = nonTerminals.next();
+			if (!definedNonTerminals.contains(nonTerminal) && !nonTerminal.equals(g.getDistSymbol()))
+				nonTerminals.remove();
+		}
+	}
+
+	private static Set<String> getDefinedNonTerminals(Grammar g) {
+		Iterator<Production> productions;
+		Set<String> definedNonTerminals = new HashSet<String>();
+		productions = g.getProductions();
+		while (productions.hasNext()) {
+			definedNonTerminals.add(productions.next().getLeft().peekFirst());
+		}
+		return definedNonTerminals;
+	}
+
+	private static boolean isExpandable(Set<String> terminals,
+			Set<String> nonTerminals, Production p) {
+		Production production = p;
+		for (String x : production.getRight()) {
+			if (!nonTerminals.contains(x) && !terminals.contains(x)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static void addProductions(Grammar g, Iterator<Production> pIt) {
@@ -46,10 +102,11 @@ public class Normalization {
 			Production p = pIt.next();
 			g.addProduction(p);
 		}
-		
+
 	}
 
-	// Devuelve los no terminales que derivan en lambda y no son el simbolo distinguido
+	// Devuelve los no terminales que derivan en lambda y no son el simbolo
+	// distinguido
 	private static Set<Production> getLowerLambdaProductions(Grammar g) {
 		Set<Production> lambda = new HashSet<Production>();
 		Iterator<Production> pIt = g.getProductions();
@@ -62,10 +119,10 @@ public class Normalization {
 				}
 			}
 		}
-		
+
 		return lambda;
 	}
-	
+
 	private static void removeProductions(Grammar g, Collection<Production> c) {
 		Iterator<Production> pIt = g.getProductions();
 
@@ -76,6 +133,6 @@ public class Normalization {
 				pIt.remove();
 			}
 		}
-		
+
 	}
 }
