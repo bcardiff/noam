@@ -1,7 +1,7 @@
 package noam;
 
 public class BaseFormalismConverterFixture {
-	protected void assertCanConvert(ErConverter c) {
+	protected void assertCanConvert(FormalismConverter<?> c) {
 		System.out.append("\nInput: ");
 		System.out.append(c.getInput());
 		System.out.append("\n  AF:  ");
