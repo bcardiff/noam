@@ -13,7 +13,7 @@ public class EntryPoint {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int c;
+		int c = 0;
 		String inputFormalism = null;
 		String outputFormalism = null;
 		StringBuffer i = new StringBuffer();
@@ -21,7 +21,7 @@ public class EntryPoint {
 		LongOpt[] longopts = new LongOpt[2];
 
 		longopts[0] = new LongOpt("input", LongOpt.REQUIRED_ARGUMENT, i, 'i');
-		longopts[1] = new LongOpt("output", LongOpt.OPTIONAL_ARGUMENT, o, 'o');
+		longopts[1] = new LongOpt("output", LongOpt.REQUIRED_ARGUMENT, o, 'o');
 
 		Getopt g = new Getopt("noam", args, "i:o:", longopts);
 
@@ -33,7 +33,6 @@ public class EntryPoint {
 					System.err.println("Opcion -i sin argumento.");
 					System.exit(-1);
 				}
-
 				break;
 			case 'o':
 				outputFormalism = g.getOptarg();
@@ -41,12 +40,22 @@ public class EntryPoint {
 					System.err.println("Opcion -o sin argumento.");
 					System.exit(-1);
 				}
-
+				break;
+			case '?':
+			case ':':
+				System.err.println("Error!");
+				System.exit(-4);
 				break;
 			default:
 				System.err.println("Opcion invalida");
+				System.exit(-6);
 				break;
 			}
+		}
+		
+		if (inputFormalism == null) {
+			System.err.println("Falta el tipo de formalismo de entrada");
+			System.exit(-7);
 		}
 		
 		FormalismConverter f = initializeConverter(inputFormalism, new InputStreamReader(System.in));
