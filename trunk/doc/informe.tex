@@ -1,0 +1,42 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{a4wide}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{makeidx} 
+\usepackage{caratula}
+\makeindex
+
+\newcommand{\fileh}[1]{\noindent\textsf{Archivo: }\texttt{#1} \hfill\ }
+
+\begin{document}
+
+
+\titulo{Conversiones entre formalismos}
+\fecha{17 de Julio de 2008}
+\materia{Teoría de Lenguajes}
+\integrante{Cardiff, Brian Jonathan}{784/03}{bcardiff@gmail.com}
+\integrante{Savoretti, Sonia Florencia}{785/03}{soniaflorencia@gmail.com}
+\integrante{Geier, Maxi}{TODO}{migeier@gmail.com}
+
+\maketitle
+
+\tableofcontents
+
+\section{TODO}
+Se generan AF sin estados finales. en AFM, completar con un estado trampa final daría un AF no minimo. Preferimos contemplar la generación de los AF sin estados finales. e.g.:  VACIO, VACIO.a
+
+\section{Ejemplos}
+
+\section{Código fuente AntLR}
+\lstset{numbers=left, frame=single, tabsize=2, breaklines=true}
+\input{source-code-antlr}
+
+\section{Código fuente Java}
+\lstset{language=Java, numbers=left, frame=single, tabsize=2, breaklines=true}
+\input{source-code-java}
+
+\addcontentsline{toc}{section}{Index}
+\printindex 
+
+\end{document}
