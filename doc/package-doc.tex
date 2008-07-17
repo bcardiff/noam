@@ -1,0 +1,73 @@
+\subsection{package noam}
+
+Se encuentra el punto de entrada (\jc{EntryPoint}), funcionalidad auxiliar de entrada/salida (\jc{IO}), y conversores de formalismos (\jc{FormalismConverter} y descendientes).
+
+Hay un \jc{FormalismConverter} por formalismo que identifica el formalismo inicial. Éstos se engargan de validar la entrada y realizar la conversión hacia los otros formalismos.
+La clase abstracta \jc{FormalismConverter} define cómo obtener un AFD y un AFM a partir de un AF. Luego, en las clases descendientes solo es necesario definir la conversión a AF.
+
+\subsection{package noam.af}
+
+Se encuentra la representación de un AF (cualquier autómata finito). Un AF es todo aquel que implementa la interfáz \jc{AF}.
+Hay una implementación trivial: \jc{AFND}.
+
+También se encuentra la interfáz \jc{IAutomataBuilder} que es usada para desacoplar la creación de un autómata de la clase que lo representa. Ésto se usa en el parser.
+
+\subsection{package noam.af.algorithms}
+
+Se encuentran los algoritmos de conversión de AF hacia ER y a GR; y los algoritmos de manipulación de autómatas.
+
+Los algoritmos de manipulación de autómatas se implementan usando el patrón \emph{Decorator}. En algunos algoritmos es necesario
+crear estados nuevos, para simplificar el desarrollo de los mismo, los autómatas (pero nó el parser) soportan estados con nombres de más
+de una letra. Como última etapa en la conversión (\jc{FormalismConverter}) se aplica un renombre de estados usando los nombres: A, B, $\ldots$, Z, AA, AB, $\ldots$ en
+un mejor esfuerzo por obtener un autómata válido para la gramática.
+
+\subsection{package noam.af.grammar}
+
+Se encuentra la gramática de AF y las clases generadas por AntLR a partir de ésta.
+
+La gramática utiliza como contexto de ejecución un \jc{IAutomataBuilder}, llamando a los 
+métodos que corresponda de acuerdo a lo que se esté parseando ej.: agregado de estados, terminales, transiciones, etc. 
+
+\subsection{package noam.af.internal}
+
+Se encuentra implentación de \jc{IAutomataBuilder} que genera un \jc{AFND}.
+
+\subsection{package noam.er}
+
+Se encuentra clases de representación del AST de expresiones regulares. La jerarquía empieza en \jc{ER}.
+Se implementa el patrón \emph{Visitor} por medio de \jc{IVisitor}.
+
+\subsection{package noam.er.algorithms}
+
+Se encuentran algoritmos para conversión de ER a AF y para la impresión de una ER, los mismos se implementan usando el patrón \emph{Visitor}.
+
+\subsection{package noam.er.grammar}
+
+Se encuentra la gramática de ER y las clases generadas por AntLR a partir de ésta.
+
+Cada regla de la gramática retorn una instacia que representa el AST generado por dicha regla.
+
+\subsection{package noam.gr}
+
+Se encuentra la representación de una gramática (\jc{Grammar}). 
+
+También se encuentra la interfáz \jc{IGrammarBuilder} que es usada para desacoplar la creación de una gramática del parser.
+
+\subsection{package noam.gr.algorithms}
+
+Se encuentra la conversión de GR a AF y un algoritmo para normalizión de gramáticas para asegurar que solo aparezcan producciones lambda para el símbolo distinguido.
+
+\subsection{package noam.gr.grammar}
+
+Se encuentra la gramática de GR y las clases generadas por AntLR a partir de ésta.
+
+La gramática utiliza como contexto de ejecución un \jc{IGrammarBuilder}, llamando a los 
+métodos que corresponda de acuerdo a lo que se esté parseando ej.: agregado de no-terminales, terminales, producciónes, etc. 
+
+\subsection{package noam.gr.internal}
+
+Se encuentra implentación de \jc{IGrammarBuilder} que genera un \jc{Grammar}.
+
+\subsection{package noam.utils}
+
+Se encuentran funciones auxiliares de uso general. Entre otras para la manipulación de iteradores con fluidez.

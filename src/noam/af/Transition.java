@@ -45,7 +45,7 @@ public class Transition {
 
 	public static Comparator<Transition> comparator() {
 		return new Comparator<Transition>() {
-			@Override
+			//@Override
 			public int compare(Transition o1, Transition o2) {
 				int res;
 				res = o1.getFrom().compareTo(o2.getFrom());

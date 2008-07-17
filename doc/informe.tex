@@ -8,11 +8,12 @@
 \makeindex
 
 \newcommand{\fileh}[1]{\noindent\textsf{Archivo: }\texttt{#1} \hfill\ }
+\newcommand{\jc}[1]{\texttt{#1}} % TODO make ref
 
 \begin{document}
 
-
-\titulo{Conversiones entre formalismos}
+\titulo{Noam}
+\subtitulo{Conversiones entre formalismos de lenguajes}
 \fecha{17 de Julio de 2008}
 \materia{Teoría de Lenguajes}
 \integrante{Cardiff, Brian Jonathan}{784/03}{bcardiff@gmail.com}
@@ -26,7 +27,33 @@
 \section{TODO}
 Se generan AF sin estados finales. en AFM, completar con un estado trampa final daría un AF no minimo. Preferimos contemplar la generación de los AF sin estados finales. e.g.:  VACIO, VACIO.a
 
+Para los casos de formalismos de entrada AFD y AFM, se toma como válido la entrada si corresponde exactamente con dicho formalismo.
+
+Simplificaciones en la conversion de ER a AF
+
+Descripción de las conversiones. hacer tablita.
 \section{Ejemplos}
+
+\section{Desarrollo}
+
+El desarrollo del proyecto se realizó con Eclipse 3.2. Se usaron las siguientes bibliotecas y plug-ins de eclipse:
+
+\begin{description}
+\item[antlr-eclipse] \verb"http://antlreclipse.sourceforge.net/" plug-in de eclipse con soporte para
+edición y compilación integrada de gramáticas AntLR 2.7.6 .
+\item[JUnit4]
+\item[java-getopt] biblioteca incluida en \verb"/lib" para el tratamiento de argumentos por línea de comandos.
+\item[FatJar] \verb"http://fjep.sourceforge.net/" plug-in de eclipse para generar un jar sin dependencias.
+\end{description}
+
+Dado que se usó FatJar, para usar la aplicación lo único necesario es ejecutar
+
+\begin{verbatim}
+#> java -jar noam.jar -i <GR|ER|AF|AFD|AFM> [-o <GR|ER|AF|AFD|AFM>]
+\end{verbatim}
+
+\section{Descripción por package}
+\input{package-doc}
 
 \section{Código fuente AntLR}
 \lstset{numbers=left, frame=single, tabsize=2, breaklines=true}
