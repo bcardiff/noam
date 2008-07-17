@@ -31,12 +31,15 @@ El siguiente gráfico muestra los algoritmos implementados para convertir de un
 formalismo a otro. 
 
 \begin{center}
-\includegraphics[width=7cm]{conversiones.png}
+\includegraphics[width=6.5cm]{conversiones.png}
 \end{center}
 
 Luego, por ejemplo para convertir de ER a AFM se realizan las conversiones
 intermedias a AF y a AFD. En el caso de AFM a AFD o AF no se realiza conversión alguna, 
 así como tampoco para AFD a AF.
+
+Para los casos de formalismos de entrada AFD y AFM, se toma como válida
+la entrada si corresponde exactamente con dicho formalismo.
 
 A continuación se hacen comentarios sobre los distintos algoritmos de conversión.
 
@@ -61,6 +64,20 @@ Se implementa el algoritmo recursivo que plantea $R^k_{ij}$ como el lenguaje reg
 obtiene desde el estado $s_i$ al estado $s_j$ pasando a lo sumo por $s_1, \ldots, s_k$ como estados intermedios.
 
 La implementación se encuentra en \jc{AFDtoER}.
+
+A medida que se generan los resultados intermedios se le aplican algunas simplificaciones: 
+
+\begin{itemize}
+\item $\emptyset | r = r$
+\item $r | \emptyset = r$
+\item $\lambda | \lambda = \lambda$
+\item $\emptyset . r = \emptyset$
+\item $r . \emptyset = \emptyset$
+\item $\lambda . r = r$
+\item $r . \lambda = r$
+\item $\emptyset^* = \lambda$
+\item $\lambda^* = \lambda$
+\end{itemize}
 
 \subsection{ER a AF}
 
@@ -91,25 +108,45 @@ La implementación se encuentra en \jc{AFToGr}.
 
 Como las gramáticas tratadas son recursivas simples a derecha la transformación se pone
 un estado $q_A$ por cada símbolo no terminal $A$, el estado inicial se corresponde con el 
-símbolo distinguido y cada producción se traduce como sigue:
+símbolo distinguido, se agregar un estado final $q_f$ (que no se
+corresponde con ningún símbolo no terminal) y cada producción se traduce como sigue:
 
 \begin{description}
 \item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final y una transición
-	desde $q_A$ hacia el mismo estado por $\lambda$.
+	desde $q_A$ hacia el mismo estado por $\lambda$. %TODO porque esta transicion?
 \item[$A \rightarrow tB$] se agrega una transición con label $t$ desde $q_A$ hacia $q_B$.
-\item[$A \rightarrow t$] se agrega un nuevo estado $q_{DEAD}$, a menos que ya se lo haya 
-	creado en una iteración anterior, y se agrega una transición desde $q_A$ hacia $q_{DEAD}$
-	por $t$. El estado $q_{DEAD}$ es agregado al conjunto de estados finales.
+\item[$A \rightarrow t$] se agrega a una transición con label $t$ desde $q_A$ hacia $q_f$.
 \end{description}
 
-\section{TODO}
-
-Para los casos de formalismos de entrada AFD y AFM, se toma como válido la entrada si corresponde exactamente con dicho formalismo.
-
-Simplificaciones en la conversion de ER a AF
-
-Descripción de las conversiones. hacer tablita.
 \section{Ejemplos}
+
+Se muestra la conversión de $a.(a|b)^*$ a AFD y AFM.
+
+\begin{verbatim}
+#> java -jar noam.jar -i ER -o AFD
+a.(a|b)*
+^Z
+<(A,B,C,D),(a,b),((A,a,A)(A,b,D)(B,a,C)(C,a,A)(C,b,D)(D,a,A)(D,b,D)),B,(A,C,D)>
+\end{verbatim}
+
+La salida se corresponde con:
+
+\begin{center}
+\includegraphics[width=3.5cm]{ejemplo1.png}
+\end{center}
+
+\begin{verbatim}
+#> java -jar noam.jar -i ER -o AFM
+a.(a|b)*
+^Z
+<(A,B,C),(a,b),((A,a,A)(A,b,A)(B,a,C)(B,b,A)(C,a,C)(C,b,C)),B,(C)>
+\end{verbatim}
+
+La salida se corresponde con:
+
+\begin{center}
+\includegraphics[width=6cm]{ejemplo2.png}
+\end{center}
 
 \section{Desarrollo}
 
@@ -126,8 +163,10 @@ edición y compilación integrada de gramáticas AntLR 2.7.6 .
 Dado que se usó FatJar, para usar la aplicación lo único necesario es ejecutar
 
 \begin{verbatim}
-#> java -jar noam.jar -i <GR|ER|AF|AFD|AFM> [-o <GR|ER|AF|AFD|AFM>]
+#> java -jar noam.jar -i <GR|ER|AF|AFD|AFM> [-o <GR|ER|AF|AFD|AFM> [-d]]
 \end{verbatim}
+
+El parámetro \verb"-d" es para imprimir el autómata resultante en formato dot.
 
 \section{Descripción por package}
 \input{package-doc}
