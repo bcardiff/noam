@@ -1,0 +1,3 @@
+digraph G {B [shape=box]A [shape=diamond]C [shape=diamond]D [shape=diamond]A ->
+D [label=b]A -> A [label=a]B -> C [label=a]C -> D [label=b]C -> A [label=a]D ->
+D [label=b]D -> A [label=a]}
