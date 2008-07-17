@@ -9,22 +9,6 @@ import noam.af.internal.AFNDBuilder;
 import noam.gr.Grammar;
 import noam.gr.Production;
 
-/**
- * Esta clase se encarga de convertir gramaticas en automatas.
- * El algoritmo implementado es el siguiente:
- * - Los simbolos no terminales de la gramatica seran estados en el automata.
- * - Los simbolos terminales de la gramatica seran labels de las transiciones
- *   en el automata. 
- * - El simbolo distinguido de la gramatica sera estado inicial en el automata.
- * - Si existen producciones de la forma NoTerminal -> terminal, se crea un
- *   estado final con una transicion entre el estado que representa al no terminal y
- *   este nuevo estado.
- * - Si existen producciones NoTerminal -> lambda, el estado que representa al no
- *   terminal pasa a ser estado final y se crea una transicion entre este estado y
- *   si mismo, por lambda.
- *   
- * El automata generado es un AFND-lambda, posiblemente no minimo.
- */
 public class GrToAutomata {
 	static String lastDeadState = null;
 	
