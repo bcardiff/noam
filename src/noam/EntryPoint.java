@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
 
+import noam.af.AF;
+
 import gnu.getopt.Getopt;
 import gnu.getopt.LongOpt;
 
@@ -14,16 +16,18 @@ public class EntryPoint {
 	 */
 	public static void main(String[] args) {
 		int c = 0;
+		boolean printDot = false;
 		String inputFormalism = null;
 		String outputFormalism = null;
 		StringBuffer i = new StringBuffer();
 		StringBuffer o = new StringBuffer();
-		LongOpt[] longopts = new LongOpt[2];
+		LongOpt[] longopts = new LongOpt[3];
 
 		longopts[0] = new LongOpt("input", LongOpt.REQUIRED_ARGUMENT, i, 'i');
 		longopts[1] = new LongOpt("output", LongOpt.REQUIRED_ARGUMENT, o, 'o');
+		longopts[2] = new LongOpt("dot", LongOpt.NO_ARGUMENT, new StringBuffer(), 'd');
 
-		Getopt g = new Getopt("noam", args, "i:o:", longopts);
+		Getopt g = new Getopt("noam", args, "i:o:d", longopts);
 
 		while ((c = g.getopt()) != -1) {
 			switch (c) {
@@ -40,6 +44,9 @@ public class EntryPoint {
 					System.err.println("Opcion -o sin argumento.");
 					System.exit(-1);
 				}
+				break;
+			case 'd':
+				printDot = true;
 				break;
 			case '?':
 			case ':':
@@ -70,19 +77,19 @@ public class EntryPoint {
 			System.exit(-3);
 		}
 		
-		convertFormalism(f, outputFormalism, System.out);
+		convertFormalism(f, outputFormalism, System.out, printDot);
 	}
 
-	private static void convertFormalism(FormalismConverter f, String outputFormalism, PrintStream out) {
+	private static void convertFormalism(FormalismConverter f, String outputFormalism, PrintStream out, boolean printDot) {
 		if (outputFormalism != null) {
 			if (outputFormalism.equals("ER")) {
 				out.println(IO.print(f.toER()));
 			} else if (outputFormalism.equals("AF")) {
-				out.println(IO.print(f.toAF()));
+				out.println(printAF(f.toAF(), printDot));
 			} else if (outputFormalism.equals("AFD")) {
-				out.println(IO.print(f.toAFD()));
+				out.println(printAF(f.toAFD(), printDot));
 			} else if (outputFormalism.equals("AFM")) {
-				out.println(IO.print(f.toAFM()));
+				out.println(printAF(f.toAFM(), printDot));
 			} else if (outputFormalism.equals("GR")) {
 				out.println(IO.print(f.toGR()));
 			} else {
@@ -91,6 +98,13 @@ public class EntryPoint {
 		} else {
 			out.println("El formalismo es correcto.");
 		}
+	}
+	
+	private static String printAF(AF af, boolean printDot){
+		if (!printDot)
+			return IO.print(af);
+		else
+			return IO.printDot(af);
 	}
 
 	private static FormalismConverter initializeConverter(String inputFormalism, Reader input) {
