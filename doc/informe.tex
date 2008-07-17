@@ -48,12 +48,17 @@ A continuación se hacen comentarios sobre los distintos algoritmos de conversión
 Se aplica directamente la eliminación de transiciones lambda y la determinización
 del autómata. Se implementa en \jc{Determination}.
 
+La determinación se genera pre calculando los nuevos estados (que se corresponden con subconjuntos de estados del autómata original). En lugar de generar todos los subconjuntos de estados del autómata original, se parte de la clausura lambda del estado inicial y se recorren solo las transiciones alcanzables a partir de este y de los estados que se van generando. El resto del autómata, es decir, las transiciones y los estados finales se generan a partir de ése cómputo.
+
 \subsection{AFD a AFM. Minimizar}
 
 Luego de completar el AFD usando \jc{Complete} y eliminar los estados no alcanzables usando
 \jc{Reachables}, se aplica el algoritmo de minimización visto en clase e implementado en \jc{Minimization}.
 
-Como resultado de la minimización es posible que se generen autómatas sin estados finales. 
+Durante el algoritmo para completar el autómata se asegura que todos los estados tienen
+transiciones por cada terminal del alfabeto. Ésto potencialmente genera un estado trampa.
+
+Como resultado de la minimización es posible que se generen autómatas sin estados finales.
 Elegimos contemplar la generación de los autómatas sin estados finales, por más que no
 sean parte de la gramática. Claramente ésto se presenta cuando el lenguaje que se describe
 es $\emptyset$ ej.:  VACIO, VACIO.a.
