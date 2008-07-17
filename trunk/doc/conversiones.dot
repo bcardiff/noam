@@ -1,0 +1,9 @@
+digraph G
+{
+AF -> AFD [label="determinizar"]
+AFD -> AFM [label="minimizar"]
+AFD -> ER
+AFD -> GR
+ER -> AF
+GR -> AF
+}
