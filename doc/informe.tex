@@ -1,10 +1,11 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage{a4wide}
+\usepackage{caratula}
+\usepackage[pdftex]{graphicx}
 \usepackage[spanish]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage{listings}
 \usepackage{makeidx} 
-\usepackage{caratula}
 \makeindex
 
 \newcommand{\fileh}[1]{\noindent\textsf{Archivo: }\texttt{#1} \hfill\ }
@@ -24,8 +25,72 @@
 
 \tableofcontents
 
+\section{Conversiones entre formalismos}
+
+El siguiente gráfico muestra los algoritmos implementados para convertir de un 
+formalismo a otro. 
+
+\begin{center}
+\includegraphics[width=7cm]{conversiones.png}
+\end{center}
+
+Luego, por ejemplo para convertir de ER a AFM se realizan las conversiones
+intermedias a AF y a AFD. En el caso de AFM a AFD o AF no se realiza conversión alguna, 
+así como tampoco para AFD a AF.
+
+A continuación se hacen comentarios sobre los distintos algoritmos de conversión.
+
+\subsection{AF a AFD. Determinizar}
+
+Se aplica directamente la eliminación de transiciones lambda y la determinización
+del autómata. Se implementa en \jc{Determination}.
+
+\subsection{AFD a AFM. Minimizar}
+
+Luego de completar el AFD usando \jc{Complete} y eliminar los estados no alcanzables usando
+\jc{Reachables}, se aplica el algoritmo de minimización visto en clase e implementado en \jc{Minimization}.
+
+Como resultado de la minimización es posible que se generen autómatas sin estados finales. 
+Elegimos contemplar la generación de los autómatas sin estados finales, por más que no
+sean parte de la gramática. Claramente ésto se presenta cuando el lenguaje que se describe
+es $\emptyset$ ej.:  VACIO, VACIO.a.
+
+\subsection{AFD a ER}
+
+Se implementa el algoritmo recursivo que plantea $R^k_{ij}$ como el lenguaje regular que se
+obtiene desde el estado $s_i$ al estado $s_j$ pasando a lo sumo por $s_1, \ldots, s_k$ como estados intermedios.
+
+La implementación se encuentra en \jc{AFDtoER}.
+
+\subsection{ER a AF}
+
+Se hace una transformación recursiva en la estructura de la ER basada en la demostración
+de inclusión de lenguajes aceptados por expresiones regulares en los aceptados 
+por autómatas finitos del Hopcroft et.al..
+
+La única diferencia es el caso de la clausura. En lugar de agregar un estado final y uno inicial, se preserva
+el estado inicial, se agregan transiciones lambda desde todos los finales al inicial, y se define al estado inicial
+como único estado final.
+
+La implementación se encuentra en \jc{ERToAutomata}.
+
+\subsection{AFD a GR}
+
+TODO
+
+\subsection{GR a AF}
+
+Como las gramáticas tratadas son recursivas simples a derecha la transformación se pone
+un estado $q_A$ por cada símbolo no terminal $A$, el estado inicial se corresponde con el 
+símbolo distinguido y cada producción se traduce como sigue:
+
+\begin{description}
+\item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final.
+\item[$A \rightarrow tB$] se agrega una transición con label $t$ desde $q_A$ hacia $q_B$.
+\item[$A \rightarrow t$] se agrega a una ... TODO ...
+\end{description}
+
 \section{TODO}
-Se generan AF sin estados finales. en AFM, completar con un estado trampa final daría un AF no minimo. Preferimos contemplar la generación de los AF sin estados finales. e.g.:  VACIO, VACIO.a
 
 Para los casos de formalismos de entrada AFD y AFM, se toma como válido la entrada si corresponde exactamente con dicho formalismo.
 
