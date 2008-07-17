@@ -78,4 +78,17 @@ public class AFToGrFixture {
 		IteratorHelper.assertSameElements(gr.getTerminals(), 
 				"0", "1");
 	}
+	
+	@Test
+	public void test5() {
+		AF a = IO.parseAF("<(S),(),(),S,(S)>");
+		Grammar gr = AFToGr.convert(a);
+		
+		IteratorHelper.assertSameElements(gr.getProductions(),
+				new Production("S"));
+		assertEquals("S", gr.getDistSymbol());
+		IteratorHelper.assertSameElements(gr.getNonTerminals(), 
+				"S");
+		IteratorHelper.assertSameElements(gr.getTerminals());		
+	}
 }
