@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{article}
+ \documentclass[a4paper,10pt]{article}
 \usepackage{a4wide}
 \usepackage{caratula}
 \usepackage[pdftex]{graphicx}
@@ -104,6 +104,20 @@ Se implementa un algoritmo que transforma el autómata de la siguiente forma:
 
 La implementación se encuentra en \jc{AFToGr}.
 
+Además de esta transformación, se encuentra en \jc{Normalization} un algoritmo que elimina las
+producciones de la forma $A \rightarrow \lambda$ para todo $A$ que no sea el símbolo distinguido y las no
+alcanzables. El mismo es compuesto con la salida de \jc{AFToGr} para normalizar la transformación.
+Este algoritmo transforma las producciones de la siguiente forma:
+
+\begin{itemize}
+\item Para cada producción de la forma $A \rightarrow tB$, si existe una producción $A \rightarrow 
+\lambda$, se agrega la producción $A \rightarrow t$.
+\item Se eliminan todas las producciones de la forma $A \rightarrow \lambda$ tales que $A$ no es el
+símbolo distinguido.
+\item Se buscan las producciones de la forma $A \rightarrow tB$ tales que $A$ no es el símbolo distinguido
+y $B$ no es alcanzable, es decir, que no hay producciones que tengan a $B$ en su lado izquierdo, y se las elimina.
+\end{itemize}
+
 \subsection{GR a AF}
 
 Como las gramáticas tratadas son recursivas simples a derecha la transformación se pone
@@ -112,8 +126,7 @@ símbolo distinguido, se agregar un estado final $q_f$ (que no se
 corresponde con ningún símbolo no terminal) y cada producción se traduce como sigue:
 
 \begin{description}
-\item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final y una transición
-	desde $q_A$ hacia el mismo estado por $\lambda$. %TODO porque esta transicion?
+\item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final.
 \item[$A \rightarrow tB$] se agrega una transición con label $t$ desde $q_A$ hacia $q_B$.
 \item[$A \rightarrow t$] se agrega a una transición con label $t$ desde $q_A$ hacia $q_f$.
 \end{description}
