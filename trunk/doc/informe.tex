@@ -76,7 +76,16 @@ La implementación se encuentra en \jc{ERToAutomata}.
 
 \subsection{AFD a GR}
 
-TODO
+Se implementa un algoritmo que transforma el autómata de la siguiente forma:
+
+\begin{itemize}
+\item El estado inicial se convierte en el símbolo distinguido de la gramática.
+\item Cada estado se convierte en un símbolo no terminal.
+\item Cada transición $(q_A, t, q_B)$ se convierte en una producción de la forma $A \rightarrow tB$.
+\item Se agrega una producción $A \rightarrow \lambda$ por cada $q_A$ que sea estado final del autómata.
+\end{itemize}
+
+La implementación se encuentra en \jc{AFToGr}.
 
 \subsection{GR a AF}
 
@@ -85,9 +94,12 @@ un estado $q_A$ por cada símbolo no terminal $A$, el estado inicial se correspon
 símbolo distinguido y cada producción se traduce como sigue:
 
 \begin{description}
-\item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final.
+\item[$A \rightarrow \lambda$] se agrega el estado $q_A$ como estado final y una transición
+	desde $q_A$ hacia el mismo estado por $\lambda$.
 \item[$A \rightarrow tB$] se agrega una transición con label $t$ desde $q_A$ hacia $q_B$.
-\item[$A \rightarrow t$] se agrega a una ... TODO ...
+\item[$A \rightarrow t$] se agrega un nuevo estado $q_{DEAD}$, a menos que ya se lo haya 
+	creado en una iteración anterior, y se agrega una transición desde $q_A$ hacia $q_{DEAD}$
+	por $t$. El estado $q_{DEAD}$ es agregado al conjunto de estados finales.
 \end{description}
 
 \section{TODO}
