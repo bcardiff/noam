@@ -3,7 +3,6 @@ package noam.gr;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-// FIXME: este Production es mucho mas general de lo que hace falta
 public class Production {
 	private LinkedList<String> left;
 

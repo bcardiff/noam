@@ -10,8 +10,14 @@ import noam.gr.Grammar;
 import noam.gr.Production;
 
 public class GrToAutomata {
-
+	static String lastDeadState = null;
+	
+	public static String getLastDeadState() {
+		return lastDeadState;
+	}
+	
 	public static AF convert(Grammar g) {
+		lastDeadState = null;
 		AFNDBuilder builder = new AFNDBuilder();
 		Iterator<String> ntIt = g.getNonTerminals();
 
@@ -42,8 +48,12 @@ public class GrToAutomata {
 					to = right.next();
 				} else {
 					// produccion NT -> t
-					to = from;
-					builder.addFinalState(to);
+					to = genDeadStateName(g);
+					if (lastDeadState == null) {
+						lastDeadState = to;
+						builder.addState(to);
+						builder.addFinalState(to);
+					}
 				}
 			} else {
 				// produccion NT -> \
@@ -58,4 +68,15 @@ public class GrToAutomata {
 		
 		return builder.getAutomata();
 	}
+	
+	private static String genDeadStateName(Grammar g) {
+		StringBuilder buffer = new StringBuilder();
+		Iterator<String> it = g.getNonTerminals();
+		buffer.append("Z");
+		while (it.hasNext()) {
+			buffer.append(it.next());
+		}
+		return buffer.toString();
+	}
+	
 }
