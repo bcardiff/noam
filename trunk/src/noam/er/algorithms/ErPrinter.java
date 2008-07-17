@@ -19,7 +19,7 @@ public class ErPrinter implements IVisitor {
 		this.parent = null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(ERChoice e) {
 		boolean shouldUseParen = shouldUseParens(e);
 		if (shouldUseParen)
@@ -34,7 +34,7 @@ public class ErPrinter implements IVisitor {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(ERClosure e) {
 		boolean shouldUseParen = shouldUseParens(e);
 		if (shouldUseParen)
@@ -47,7 +47,7 @@ public class ErPrinter implements IVisitor {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(ERConcat e) {
 		boolean shouldUseParen = shouldUseParens(e);
 		if (shouldUseParen)
@@ -66,19 +66,19 @@ public class ErPrinter implements IVisitor {
 		return parent != null && !e.getClass().equals(parent.getClass());
 	}
 
-	@Override
+	//@Override
 	public Object visit(EREmpty e) {
 		output.append("VACIO");
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(ERLambda e) {
 		output.append("LAMBDA");
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(ERTerminal e) {
 		output.append(e.getTerminal());
 		return null;
