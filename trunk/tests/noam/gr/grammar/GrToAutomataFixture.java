@@ -1,9 +1,7 @@
 package noam.gr.grammar;
 
 import static junit.framework.Assert.assertEquals;
-
-import org.junit.Test;
-
+import static junit.framework.Assert.assertNotNull;
 import noam.IO;
 import noam.af.AF;
 import noam.af.Terminal;
@@ -11,6 +9,8 @@ import noam.af.Transition;
 import noam.gr.Grammar;
 import noam.gr.algorithms.GrToAutomata;
 import noam.utils.IteratorHelper;
+
+import org.junit.Test;
 
 public class GrToAutomataFixture {
 
@@ -51,8 +51,26 @@ public class GrToAutomataFixture {
 		IteratorHelper.assertSameElements(a.getTransitions("B"), 
 				new Transition("B", "b", "B"),
 				new Transition("B", Terminal.LAMBDA, "B"));
-	
-		System.out.println(a);
 	}
-	
+
+	@Test
+	public void test3() {
+		Grammar gr = IO.parseGr("<(A),(1),((A,1)),A>");
+		AF a = GrToAutomata.convert(gr);
+
+		IteratorHelper.assertSameElements(a.getAlphabet(), "1");
+		
+		assertEquals("A", a.getInitialState());
+		assertNotNull(GrToAutomata.getLastDeadState());
+		IteratorHelper.assertSameElements(a.getStates(), 
+				"A", "ZA");
+		IteratorHelper.assertSameElements(a.getFinalStates(),
+				GrToAutomata.getLastDeadState());
+		
+		IteratorHelper.assertSameElements(a.getTransitions("A"), 
+				new Transition("A", "1", GrToAutomata.getLastDeadState()));
+		IteratorHelper.assertSameElements(
+				a.getTransitions(GrToAutomata.getLastDeadState()));
+		
+	}
 }

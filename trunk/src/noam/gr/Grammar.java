@@ -45,7 +45,6 @@ public class Grammar {
 		terminals.add(t);
 	}
 	
-	// FIXME: probablemente estos 3 que siguen no se usen
 	public void addProduction(String nt) {
 		productions.add(new Production(nt));
 	}
@@ -101,7 +100,6 @@ public class Grammar {
 		for (Production p : productions) {
 			first = true;
 			s += "(";
-			// FIXME: esto imprime producciones genericas (que son soportadas por Production) pero a su vez esto hace que potencialmente genere una salida incompatible con la gramatica pedida en el TP
 			for (String t : p.getLeft()) {
 				if (!first) {
 					s += ",";

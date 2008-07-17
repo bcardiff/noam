@@ -2,7 +2,6 @@ header {
 	package noam.gr.grammar;
 	import noam.gr.IGrammarBuilder;
 	import noam.gr.Production;
-	import noam.af.Terminal; // FIXME: esto se podria mover de package a noam o algun lugar asi
 }
 
 class GrParser extends Parser;
